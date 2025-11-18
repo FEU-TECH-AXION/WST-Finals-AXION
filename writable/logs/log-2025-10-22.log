@@ -1,0 +1,95 @@
+CRITICAL - 2025-10-22 00:10:18 --> ErrorException: Undefined variable $validation
+[Method: POST, Route: users/insert]
+in APPPATH\Controllers\Users.php on line 44.
+ 1 APPPATH\Controllers\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $validation', 'C:\\xampp\\htdocs\\samples\\tw33\\app\\Controllers\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Users->insert()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-22 00:11:18 --> Error: Undefined constant "App\Controllers\this"
+[Method: POST, Route: users/insert]
+in APPPATH\Controllers\Users.php on line 47.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Users->insert()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Users))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-22 00:40:04 --> Error: Call to a member function getError() on null
+[Method: POST, Route: users/insert]
+in APPPATH\Controllers\Users.php on line 49.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Users->insert()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Users))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-22 00:40:19 --> Error: Call to a member function getErrors() on null
+[Method: POST, Route: users/insert]
+in APPPATH\Controllers\Users.php on line 49.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Users->insert()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Users))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-22 00:41:53 --> ErrorException: Array to string conversion
+[Method: POST, Route: users/insert]
+in APPPATH\Views\view_add.php on line 7.
+ 1 APPPATH\Views\view_add.php(7): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Array to string conversion', 'C:\\xampp\\htdocs\\samples\\tw33\\app\\Views\\view_add.php', 7)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\xampp\\htdocs\\samples\\tw33\\app\\Views\\view_add.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('view_add', [], true)
+ 5 APPPATH\Controllers\Users.php(52): view('view_add')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Users->insert()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Users))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-22 01:27:53 --> CodeIgniter\Validation\Exceptions\ValidationException: "required|alpha_dash|min_length" is not a valid rule.
+[Method: POST, Route: users/insert]
+in SYSTEMPATH\Validation\Validation.php on line 345.
+ 1 SYSTEMPATH\Validation\Validation.php(345): CodeIgniter\Validation\Exceptions\ValidationException::forRuleNotFound('required|alpha_dash|min_length')
+ 2 SYSTEMPATH\Validation\Validation.php(201): CodeIgniter\Validation\Validation->processRules('0', '0', null, [...], [...], '0')
+ 3 APPPATH\Controllers\Users.php(46): CodeIgniter\Validation\Validation->run([...], 'signup')
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Users->insert()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Users))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-10-22 01:40:17 --> Language.invalidMessageFormat: $message: "", $args: "Username", "tblusers.username", "admin1" (urlencoded: "Username", "tblusers.username", "admin1"), MessageFormatter Error: "msgfmt_create: message formatter creation failed: U_ILLEGAL_ARGUMENT_ERROR" (1)
+ERROR - 2025-10-22 01:40:28 --> Language.invalidMessageFormat: $message: "", $args: "Username", "6", "admin" (urlencoded: "Username", "6", "admin"), MessageFormatter Error: "msgfmt_create: message formatter creation failed: U_ILLEGAL_ARGUMENT_ERROR" (1)
+ERROR - 2025-10-22 01:40:39 --> Language.invalidMessageFormat: $message: "", $args: "Username", "6", "admin" (urlencoded: "Username", "6", "admin"), MessageFormatter Error: "msgfmt_create: message formatter creation failed: U_ILLEGAL_ARGUMENT_ERROR" (1)
+ERROR - 2025-10-22 01:41:50 --> Language.invalidMessageFormat: $message: "", $args: "Username", "6", "admin" (urlencoded: "Username", "6", "admin"), MessageFormatter Error: "msgfmt_create: message formatter creation failed: U_ILLEGAL_ARGUMENT_ERROR" (1)
+ERROR - 2025-10-22 01:41:58 --> Language.invalidMessageFormat: $message: "", $args: "Username", "6", "admin" (urlencoded: "Username", "6", "admin"), MessageFormatter Error: "msgfmt_create: message formatter creation failed: U_ILLEGAL_ARGUMENT_ERROR" (1)
+ERROR - 2025-10-22 01:42:01 --> Language.invalidMessageFormat: $message: "The username {(value)} is already used.", $args: "Username", "tblusers.username", "admin1" (urlencoded: "Username", "tblusers.username", "admin1"), MessageFormatter Error: "pattern syntax error (parse error at offset 14, after "The username {", before or at "(value)} is alr"): U_PATTERN_SYNTAX_ERROR" (65799)
+CRITICAL - 2025-10-22 01:50:51 --> Error: Call to undefined function set_value()
+[Method: POST, Route: users/insert]
+in APPPATH\Views\view_add.php on line 15.
+ 1 SYSTEMPATH\View\View.php(226): include()
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('view_add', [], true)
+ 4 APPPATH\Controllers\Users.php(52): view('view_add', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Users->insert()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Users))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-22 01:53:10 --> Error: Call to undefined function set_value()
+[Method: GET, Route: users/add]
+in APPPATH\Views\view_add.php on line 15.
+ 1 SYSTEMPATH\View\View.php(226): include()
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('view_add', [], true)
+ 4 APPPATH\Controllers\Users.php(30): view('view_add')
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Users->add()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Users))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
