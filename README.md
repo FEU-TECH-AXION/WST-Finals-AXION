@@ -1,60 +1,149 @@
-# CodeIgniter 4 Framework
+# 📘 IT Services Office Equipment Management System
 
-## What is CodeIgniter?
+*Final Project for Web System Technologies (IT0049)*
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## 🧾 Overview
 
-This repository holds the distributable version of the framework.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+The **IT Services Office Equipment Management System** is a web-based platform developed using **CodeIgniter 4** to streamline the management of school equipment, including borrowing, returning, reservations, and user account management.
+This system ensures efficient tracking, secure access, and transparent reporting for the ITSO.
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+---
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+## 🚀 Key Features / System Modules
 
-## Important Change with index.php
+### **1. User Management Module**
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+* User registration with email verification
+* View, edit, and deactivate user accounts
+* Three user categories:
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+  * **ITSO Personnel** – Full system access
+  * **Associates** – Can borrow and reserve equipment
+  * **Students** – Can borrow equipment
+* ITSO Personnel are the only users allowed to access the system dashboard
 
-**Please** read the user guide for a better explanation of how CI4 works!
+### **2. Login & Password Reset Module**
 
-## Repository Management
+* Secure login with validation
+* Password reset via email
+* Supports dummy emails for testing
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+### **3. Equipment Management Module**
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+* Add, view, edit, deactivate equipment
+* Each item has:
 
-## Contributing
+  * Unique equipment ID
+  * Item count (to determine availability)
+* Equipment categories include (but are not limited to):
 
-We welcome contributions from the community.
+  * Laptops + chargers
+  * DLP projectors + cables and remote
+  * VGA/HDMI cables
+  * Keyboards & mouse (Mac lab)
+  * Wacom tablets + pen
+  * Speakers, webcams, extension cords
+  * Crimping tools, cable testers
+  * Lab room keys
 
-Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/CONTRIBUTING.md) section in the development repository.
+### **4. Borrowing Module**
 
-## Server Requirements
+* Borrowing process for Associates and Students
+* Equipment automatically includes relevant accessories
+* Sends email notifications upon borrowing
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+### **5. Return Module**
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+* Handles equipment returns
+* Sends email notifications upon return
+* Ensures all accessories are accounted for
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+### **6. Reservation Module**
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+* Associates can reserve equipment at least **1 day before the event**
+* Reservations can be **cancelled** or **rescheduled**
+* Equipment availability validation included
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+### **7. Reports Module**
+
+Generates:
+
+* Active equipment list
+* Unusable equipment report
+* Borrowing history per user
+
+### **8. About Page**
+
+* Displays group name and member details
+
+---
+
+## 🛠️ Technologies Used
+
+* **CodeIgniter 4** (PHP Framework)
+* **Bootstrap / CSS Framework**
+* **MySQL / MariaDB** (or any chosen database engine)
+* **PHPMailer** or equivalent (for email notifications)
+
+---
+
+## 📂 Project Structure (Simplified)
+
+```
+/app
+  /Controllers
+  /Models
+  /Views
+/public
+  /uploads
+  /thumbnails
+  index.php
+/writable
+```
+
+---
+
+## 🧪 Installation & Setup
+
+1. **Clone or download** the repository
+2. Install dependencies:
+
+   ```bash
+   composer install
+   ```
+3. Copy `.env.example` → `.env` and configure:
+
+   * Database name
+   * Email credentials
+   * Base URL
+4. Run migrations (if applicable):
+
+   ```bash
+   php spark migrate
+   ```
+5. Start the local server:
+
+   ```bash
+   php spark serve
+   ```
+
+---
+
+## 👥 Group Information
+
+**Project Title:** IT Services Office Equipment Management System
+**Group Name:** *AXION*
+**Members:**
+
+* Gagan, Alexa Mhel V.
+* Gonzales, Michaela Marie V.
+* Oxina, Shane D.
+
+
+---
+
+## 📄 License
+
+This project is created for academic purposes only.
+
+---
