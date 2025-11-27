@@ -16,7 +16,7 @@ class App extends BaseConfig
      *
      * E.g., http://example.com/
      */
-    public string $baseURL = 'http://localhost/samples/tw33/';
+    public string $baseURL = 'http://localhost/WST-Finals-AXION';
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
