@@ -145,5 +145,3 @@ Generates:
 ## 📄 License
 
 This project is created for academic purposes only.
-
----
