@@ -1,0 +1,21 @@
+# CodeIgniter 4 standard ignores
+
+# Environment file (contains sensitive info like database passwords)
+.env
+
+# Composer and Vendor files
+/vendor/
+/composer.lock
+/package-lock.json
+
+# Temporary data, logs, and cache generated during runtime
+/writable/cache/*
+/writable/logs/*
+/writable/session/*
+/writable/debugbar/*
+
+# Exceptions for necessary placeholder files inside those folders
+!/writable/cache/index.html
+!/writable/logs/index.html
+!/writable/session/index.html
+!/writable/debugbar/index.html
