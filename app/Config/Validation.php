@@ -48,6 +48,10 @@ class Validation extends BaseConfig
         'password' => 'required'
     ];
 
+     public array $forgotPassword = [
+        // rules when signing in
+    ];
+
     public array $signup = [
         // rules for signup
         
