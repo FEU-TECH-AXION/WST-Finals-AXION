@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2025 at 03:52 PM
+-- Generation Time: Nov 28, 2025 at 04:05 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -110,6 +110,8 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `role` enum('itso','associate','student') NOT NULL,
   `status` enum('active','inactive') DEFAULT 'active',
+  `verify_token` varchar(255) DEFAULT NULL,
+  `isverified` tinyint(1) DEFAULT 0,
   `date_created` datetime DEFAULT current_timestamp(),
   `date_updated` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
