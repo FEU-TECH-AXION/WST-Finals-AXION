@@ -42,6 +42,12 @@ class Validation extends BaseConfig
     // Rules
     // --------------------------------------------------------------------
 
+    public array $signin = [
+        // rules when signing in
+        'email' => 'required|valid_email',
+        'password' => 'required'
+    ];
+
     public array $signup = [
         // rules for signup
         
