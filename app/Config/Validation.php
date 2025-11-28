@@ -42,13 +42,16 @@ class Validation extends BaseConfig
     // Rules
     // --------------------------------------------------------------------
 
+    // --------------------------------------------------------------------
+    // USER AUTHENTICATION RULES
+    // --------------------------------------------------------------------
     public array $signin = [
         // rules when signing in
         'email' => 'required|valid_email',
         'password' => 'required'
     ];
 
-     public array $forgotPassword = [
+    public array $forgotPassword = [
         // rules when signing in
     ];
 
@@ -102,4 +105,20 @@ class Validation extends BaseConfig
     public array $editaccount = [
         // rules when editing an account
     ];
+
+    // --------------------------------------------------------------------
+    // INVENTORY MANAGEMENT RULES
+    // --------------------------------------------------------------------
+
+    public array $addInventory = [
+        // rules when creating inventory
+    ];
+
+    public array $editInventory = [
+        // rules when editing inventory
+    ];
+
+
+
+
 }
