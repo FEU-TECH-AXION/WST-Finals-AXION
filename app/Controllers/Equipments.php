@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\Model_Products;
+use App\Models\Model_Equipments;
 
 class Equipments extends BaseController
 {
@@ -15,7 +15,7 @@ class Equipments extends BaseController
 
     public function index($perpage = 10)
     {
-        $equipmentsModel = new Model_Products();
+        $equipmentsModel = new Model_Equipments();
         $equipmentsModel->orderBy("item_name", "ASC");
 
         $queryResult = $equipmentsModel->paginate($perpage);
@@ -35,7 +35,7 @@ class Equipments extends BaseController
 
     public function view($id)
     {
-        $equipmentsModel = new Model_Products();
+        $equipmentsModel = new Model_Equipments();
         $equipment = $equipmentsModel->find($id);
 
         if (!$equipment) {
@@ -67,7 +67,7 @@ class Equipments extends BaseController
 
     public function insert()
     {
-        $equipmentsModel = new Model_Products();
+        $equipmentsModel = new Model_Equipments();
 
         $data = [
             'item_name'      => $this->request->getPost('item_name'),
@@ -104,7 +104,7 @@ class Equipments extends BaseController
 
     public function edit($id)
     {
-        $equipmentsModel = new Model_Products();
+        $equipmentsModel = new Model_Equipments();
 
         $data = [
             'title' => "Axion - Edit Equipment",
@@ -120,7 +120,7 @@ class Equipments extends BaseController
 
     public function update($id)
     {
-        $equipmentsModel = new Model_Products();
+        $equipmentsModel = new Model_Equipments();
 
         $existing = $equipmentsModel->find($id);
         if (!$existing) {
@@ -157,7 +157,7 @@ class Equipments extends BaseController
 
     public function delete($id)
     {
-        $equipmentsModel = new Model_Products();
+        $equipmentsModel = new Model_Equipments();
         $equipmentsModel->delete($id);
 
         $this->session->setFlashdata('success', 'Equipment deleted successfully.');
