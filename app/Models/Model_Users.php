@@ -4,26 +4,36 @@ namespace App\Models;
 use CodeIgniter\Model;
 
 class Model_Users extends Model{
-    protected $table      = 'tblusers';
+    protected $table      = 'users';
    
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'user_id';
     protected $useAutoIncrement = true;
 
     protected $returnType     = 'array'; // object
     // protected $useSoftDeletes = true;
 
     protected $allowedFields = [
-        'profile',
-        'username', 
-        'password', 
-        'fullname', 
+        'user_id',
+        'first_name', 
+        'middle_name', 
+        'last_name', 
+        'extension_name',
         'email', 
-        'datecreated',
+        'user_photo',
+        'password',
+        'role',
+        'status',
         'verify_token',
-        'isverified'
+        'isverified',
+        'date_created',
+        'date_updated',
     ];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
+
+    protected $useTimestamps = true;
+    protected $createdField  = 'date_created';
+    protected $updatedField  = 'date_updated';
 }
 ?>
