@@ -3,7 +3,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Model_Users extends Model{
+class Model_Borrow_Log extends Model{
     protected $table      = 'borrow_log';
    
     protected $primaryKey = 'borrow_id';
