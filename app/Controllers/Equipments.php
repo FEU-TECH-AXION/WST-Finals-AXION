@@ -1,6 +1,9 @@
 <?php
 namespace App\Controllers;
 
+use App\Controllers\BaseController;
+use App\Models\Model_Products;
+
 class Equipments extends BaseController
 {
     protected $session;
@@ -10,10 +13,11 @@ class Equipments extends BaseController
         $this->session = session();
     }
 
-    public function index($perpage = 4)
+    public function index($perpage = 10)
     {
-        $equipmentsModel = model('Model_Equipments');
-        $equipmentsModel->orderBy("equipment_name");
+        $equipmentsModel = new Model_Products();
+        $equipmentsModel->orderBy("item_name", "ASC");
+
         $queryResult = $equipmentsModel->paginate($perpage);
 
         $data = [
@@ -28,17 +32,18 @@ class Equipments extends BaseController
             . view('include/view_footer');
     }
 
+
     public function view($id)
     {
-        $equipmentsModel = model('Model_Equipments');
+        $equipmentsModel = new Model_Products();
         $equipment = $equipmentsModel->find($id);
 
-        if (! $equipment) {
+        if (!$equipment) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Equipment not found');
         }
 
         $data = [
-            'title' => "Axion - Equipment Details",
+            'title'     => "Axion - Equipment Details",
             'equipment' => $equipment
         ];
 
@@ -48,56 +53,58 @@ class Equipments extends BaseController
             . view('include/view_footer');
     }
 
+
     public function add()
     {
         $data = ['title' => "Axion - Add New Equipment"];
+
         return view('include/view_head', $data)
             . view('include/view_nav')
             . view('view_equipment_add', $data)
             . view('include/view_footer');
     }
 
+
     public function insert()
     {
-        $validation = \Config\Services::validation();
-        $equipmentsModel = model('Model_Equipments');
+        $equipmentsModel = new Model_Products();
 
         $data = [
-            'equipment_name' => $this->request->getPost('equipment_name'),
-            'price'        => $this->request->getPost('price'),
-            'stock'        => $this->request->getPost('stock'),
+            'item_name'      => $this->request->getPost('item_name'),
+            'item_type'      => $this->request->getPost('item_type'),
+            'parent_item_id' => $this->request->getPost('parent_item_id') ?: null,
+            'quantity'       => $this->request->getPost('quantity'),
+            'item_condition' => $this->request->getPost('item_condition'),
+            'location'       => $this->request->getPost('location'),
+            'status'         => $this->request->getPost('status'),
         ];
 
-        if (! $validation->run($data, 'equipments')) {
-            $data['title'] = "Axion - Add New Equipment";
-            $data['validation'] = $validation;
+        $rules = [
+            'item_name' => 'required|min_length[2]',
+            'quantity' => 'required|integer|greater_than_equal_to[0]',
+        ];
 
-            return view('include/view_head', $data)
-                . view('include/view_nav')
-                . view('view_equipment_add', $data)
-                . view('include/view_footer');
+        if (! $this->validate($rules)) {
+            return redirect()->back()->withInput()->with('validation', $this->validator);
         }
 
-        if ($equipmentsModel->where('equipment_name', $data['equipment_name'])->first()) {
-            $data['title'] = "Axion - Add New Equipment";
-            $data['validation'] = $validation;
-            $data['nameExists'] = "Equipment name already exists.";
-
-            return view('include/view_head', $data)
-                . view('include/view_nav')
-                . view('view_equipment_add', $data)
-                . view('include/view_footer');
+        // Prevent duplicate item_name
+        if ($equipmentsModel->where('item_name', $data['item_name'])->first()) {
+            return redirect()->back()
+                ->withInput()
+                ->with('nameExists', 'Equipment already exists.');
         }
 
         $equipmentsModel->insert($data);
         $this->session->setFlashdata('success', 'Equipment added successfully.');
 
-        return redirect()->to('equipments');
+        return redirect()->to('/equipments');
     }
+
 
     public function edit($id)
     {
-        $equipmentsModel = model('Model_Equipments');
+        $equipmentsModel = new Model_Products();
 
         $data = [
             'title' => "Axion - Edit Equipment",
@@ -110,76 +117,50 @@ class Equipments extends BaseController
             . view('include/view_footer');
     }
 
+
     public function update($id)
     {
-        $equipmentsModel = model('Model_Equipments');
-        $validation = \Config\Services::validation();
+        $equipmentsModel = new Model_Products();
 
-        $existingEquipment = $equipmentsModel->find($id);
-        if (! $existingEquipment) {
+        $existing = $equipmentsModel->find($id);
+        if (!$existing) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Equipment not found');
         }
 
         $data = [
-            'equipment_name' => $this->request->getPost('equipment_name'),
-            'price'        => $this->request->getPost('price'),
-            'stock'        => $this->request->getPost('stock'),
+            'item_name'      => $this->request->getPost('item_name'),
+            'item_type'      => $this->request->getPost('item_type'),
+            'parent_item_id' => $this->request->getPost('parent_item_id') ?: null,
+            'quantity'       => $this->request->getPost('quantity'),
+            'item_condition' => $this->request->getPost('item_condition'),
+            'location'       => $this->request->getPost('location'),
+            'status'         => $this->request->getPost('status'),
         ];
 
         $rules = [
-            'equipment_name' => [
-                'label' => 'Equipment Name',
-                'rules' => "required|min_length[3]|max_length[100]|is_unique[tblequipments.equipment_name,id,{$id}]",
-                'errors' => [
-                    'required'   => 'Please enter a equipment name.',
-                    'min_length' => 'Equipment name must be at least 3 characters.',
-                    'max_length' => 'Equipment name cannot exceed 100 characters.',
-                    'is_unique'  => 'This equipment already exists.'
-                ]
-            ],
-            'price' => [
-                'label' => 'Price',
-                'rules' => 'required|decimal|greater_than[0]',
-                'errors' => [
-                    'required'     => 'Please enter the equipment price.',
-                    'decimal'      => 'Price must be a valid number.',
-                    'greater_than' => 'Price must be greater than zero.'
-                ]
-            ],
-            'stock' => [
-                'label' => 'Stock',
-                'rules' => 'required|integer|greater_than_equal_to[0]',
-                'errors' => [
-                    'required'              => 'Please enter the available stock.',
-                    'integer'               => 'Stock must be a whole number.',
-                    'greater_than_equal_to' => 'Stock cannot be negative.'
-                ]
-            ]
+            'item_name' => "required|min_length[2]|is_unique[inventory.item_name,item_id,{$id}]",
+            'quantity' => 'required|integer|greater_than_equal_to[0]',
         ];
 
         if (! $this->validate($rules)) {
-            $data['title'] = "Axion - Edit Equipment";
-            $data['validation'] = $validation;
-            $data['equipment'] = $existingEquipment;
-
-            return view('include/view_head', $data)
-                . view('include/view_nav')
-                . view('view_equipment_edit', $data)
-                . view('include/view_footer');
+            return redirect()->back()
+                ->withInput()
+                ->with('validation', $this->validator);
         }
 
         $equipmentsModel->update($id, $data);
         $this->session->setFlashdata('success', 'Equipment updated successfully.');
 
-        return redirect()->to('equipments');
+        return redirect()->to('/equipments');
     }
+
 
     public function delete($id)
     {
-        model('Model_Equipments')->delete($id);
-        $this->session->setFlashdata('success', 'Equipment deleted successfully.');
+        $equipmentsModel = new Model_Products();
+        $equipmentsModel->delete($id);
 
-        return redirect()->to('equipments');
+        $this->session->setFlashdata('success', 'Equipment deleted successfully.');
+        return redirect()->to('/equipments');
     }
 }
-?>
