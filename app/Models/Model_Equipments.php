@@ -27,5 +27,9 @@ class Model_Products extends Model{
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
+
+    protected $useTimestamps = true;
+    protected $createdField  = 'date_created';
+    protected $updatedField  = 'date_updated';
 }
 ?>
