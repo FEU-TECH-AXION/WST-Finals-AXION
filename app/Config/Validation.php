@@ -42,29 +42,60 @@ class Validation extends BaseConfig
     // Rules
     // --------------------------------------------------------------------
 
+    public array $signin = [
+        // rules when signing in
+        'email' => 'required|valid_email',
+        'password' => 'required'
+    ];
+
+     public array $forgotPassword = [
+        // rules when signing in
+    ];
+
     public array $signup = [
         // rules for signup
         
-        'profile' => [
-            'uploaded[profile]',
-            'mime_in[profile, image/jpg,image/jpeg,image/png]',
-            'max_size[profile, 4096]'
-        ],
-        // label, rules, errors
-        'username' => [
-            'label' => 'Username',
-            'rules' => 'required|alpha_dash|min_length[6]|is_unique[tblusers.username]',
+        'first_name' => [
+            'rules' => 'required|regex_match[/^[A-Za-z\s\-.]+$/]',
             'errors' => [
-                'required' => 'All users must have a username.',
-                'alpha_dash' => 'You have entered an invalid character for username, the only allowed are....',
-                'min_length' => 'Username must be at least 6 characters long.',
-                'is_unique' => 'The username {value} is already used.'
+                'required' => 'First name is required.',
+                'regex_match' => 'First name can only contain letters, spaces, hyphens, and periods.'
             ]
         ],
-        
-        'password' => 'required|min_length[8]|max_length[50]',
+        'middle_name' => [
+            'rules' => 'permit_empty|regex_match[/^[A-Za-z\s\-.]+$/]',
+            'errors' => [
+                'regex_match' => 'Middle name can only contain letters, spaces, hyphens, and periods.'
+            ]
+        ],
+        'last_name' => [
+            'rules' => 'required|regex_match[/^[A-Za-z\s\-.]+$/]',
+            'errors' => [
+                'required' => 'Last name is required.',
+                'regex_match' => 'Last name can only contain letters, spaces, hyphens, and periods.'
+            ]
+        ],
+        'user_photo' => [
+            'uploaded[user_photo]',
+            'mime_in[user_photo, image/jpg,image/jpeg,image/png]',
+            'max_size[user_photo, 4096]'
+        ],
+        'extension_name' => [
+            'rules' => 'permit_empty|regex_match[/^(Jr\.?|Sr\.?|I{1,3}|IV|V|VI{0,3}|X)$/i]',
+            'errors' => [
+                'regex_match' => 'Please enter a valid extension like Jr., Sr., III, IV.',
+            ]
+        ],
+        'password' => [
+            'rules' => 'required|min_length[8]|regex_match[/[@_!]/]',
+            'errors' => [
+                'required' => 'Password is required.',
+                'min_length' => 'Password must be at least 8 characters long.',
+                'regex_match' => 'Password must include at least one special character (@, _, or !).'
+            ]
+        ],
+
         'confirmpassword' => 'matches[password]',
-        'fullname' => 'required',
         'email' => 'required|valid_email'
     ];
 
