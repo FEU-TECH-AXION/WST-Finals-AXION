@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2025 at 04:05 PM
+-- Generation Time: Nov 28, 2025 at 05:02 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -75,6 +75,35 @@ CREATE TABLE `inventory` (
   `date_updated` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Triggers `inventory`
+--
+DELIMITER $$
+CREATE TRIGGER `trg_inventory_before_insert` BEFORE INSERT ON `inventory` FOR EACH ROW BEGIN
+    DECLARE prefix VARCHAR(10);
+    DECLARE max_id INT;
+
+    -- Set prefix based on item_type
+    IF NEW.item_type = 'equipment' THEN
+        SET prefix = 'EQ-';
+    ELSEIF NEW.item_type = 'accessory' THEN
+        SET prefix = 'AC-';
+    ELSE
+        SET prefix = 'ITEM-'; -- fallback
+    END IF;
+
+    -- Only generate ID if empty
+    IF NEW.item_id IS NULL OR NEW.item_id = '' THEN
+        SET max_id = (SELECT IFNULL(MAX(CAST(SUBSTRING(item_id, LENGTH(prefix)+1) AS UNSIGNED)), 0)
+                      FROM inventory
+                      WHERE item_id LIKE CONCAT(prefix, '%'));
+
+        SET NEW.item_id = CONCAT(prefix, LPAD(max_id + 1, 4, '0'));
+    END IF;
+END
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -115,6 +144,37 @@ CREATE TABLE `users` (
   `date_created` datetime DEFAULT current_timestamp(),
   `date_updated` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Triggers `users`
+--
+DELIMITER $$
+CREATE TRIGGER `trg_users_before_insert` BEFORE INSERT ON `users` FOR EACH ROW BEGIN
+    DECLARE prefix VARCHAR(10);
+    DECLARE max_id INT;
+
+    -- Set lowercase prefix based on role
+    IF NEW.role = 'student' THEN
+        SET prefix = 'STU-';
+    ELSEIF NEW.role = 'associate' THEN
+        SET prefix = 'ASSO-';
+    ELSEIF NEW.role = 'itso' THEN
+        SET prefix = 'ITSO-';
+    ELSE
+        SET prefix = 'user-';
+    END IF;
+
+    -- Only generate ID if empty
+    IF NEW.user_id IS NULL OR NEW.user_id = '' THEN
+        SET max_id = (SELECT IFNULL(MAX(CAST(SUBSTRING(user_id, LENGTH(prefix)+1) AS UNSIGNED)), 0)
+                      FROM users
+                      WHERE user_id LIKE CONCAT(prefix, '%'));
+
+        SET NEW.user_id = CONCAT(prefix, LPAD(max_id + 1, 4, '0'));
+    END IF;
+END
+$$
+DELIMITER ;
 
 --
 -- Indexes for dumped tables
