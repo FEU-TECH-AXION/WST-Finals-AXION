@@ -3,7 +3,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Model_Products extends Model{
+class Model_Equipments extends Model{
     protected $table      = 'inventory';
    
     protected $primaryKey = 'user_id';
