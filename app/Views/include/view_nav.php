@@ -19,7 +19,7 @@
 
                 <!-- Equipment Management -->
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('equipment'); ?>">Equipment Management</a>
+                    <a class="nav-link" href="<?= base_url('equipments'); ?>">Equipment Management</a>
                 </li>
 
                 <!-- Borrowing Module -->
