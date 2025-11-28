@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
         <a class="navbar-brand" href="<?= base_url(); ?>">
             <img src="<?= base_url('/public/assets/img/logoPlaceholder.png'); ?>" alt="AXION Logo" height="40" class="d-inline-block align-text-top">
