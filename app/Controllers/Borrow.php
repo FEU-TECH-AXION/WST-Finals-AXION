@@ -67,24 +67,46 @@ class Borrow extends BaseController
 
      // Borrow submission
     public function submit()
-    {
-        $equipmentsModel = new Model_Equipments();
-        $borrowLogModel = new Model_Borrow_Log();
-        $historyModel = new Model_History();
+{
+    $equipmentsModel = new Model_Equipments();
+    $borrowLogModel  = new Model_Borrow_Log();
+    $historyModel    = new Model_History();
+    $userModel       = new \App\Models\Model_Users();
 
-        $user_id = $this->session->get('user_id');
-        $item_id = $this->request->getPost('item_id');
-        $expected_return = $this->request->getPost('expected_return_date');
+    $user_id  = $this->session->get('user_id');
+    $item_id  = $this->request->getPost('item_id');
+    $expected_return = $this->request->getPost('expected_return_date');
 
-        $equipment = $equipmentsModel->find($item_id);
-        if (!$equipment || $equipment['quantity'] < 1) {
-            $this->session->setFlashdata('error', 'Equipment not available for borrow.');
-            return redirect()->back();
-        }
+    $equipment = $equipmentsModel->find($item_id);
 
-        // Insert borrow log for parent equipment
+    if (!$equipment || $equipment['quantity'] < 1) {
+        $this->session->setFlashdata('error', 'Equipment not available for borrow.');
+        return redirect()->back();
+    }
+
+    // --- Insert parent equipment borrow log ---
+    $borrowLogModel->insert([
+        'item_id' => $item_id,
+        'user_id' => $user_id,
+        'borrow_date' => date('Y-m-d H:i:s'),
+        'expected_return_date' => $expected_return,
+        'status' => 'borrowed'
+    ]);
+
+    // --- Insert history log for parent equipment ---
+    $historyModel->insert([
+        'item_id' => $item_id,
+        'user_id' => $user_id,
+        'action' => 'borrowed',
+        'borrowed_date' => date('Y-m-d H:i:s')
+    ]);
+
+    // --- Insert borrow logs and history for accessories ---
+    $accessories = $equipmentsModel->where('parent_item_id', $item_id)->findAll();
+
+    foreach ($accessories as $acc) {
         $borrowLogModel->insert([
-            'item_id' => $item_id,
+            'item_id' => $acc['item_id'],
             'user_id' => $user_id,
             'borrow_date' => date('Y-m-d H:i:s'),
             'expected_return_date' => $expected_return,
@@ -92,55 +114,39 @@ class Borrow extends BaseController
         ]);
 
         $historyModel->insert([
-            'item_id' => $item_id,
+            'item_id' => $acc['item_id'],
             'user_id' => $user_id,
             'action' => 'borrowed',
             'borrowed_date' => date('Y-m-d H:i:s')
         ]);
-
-        // Borrow all accessories
-        $accessories = $equipmentsModel->where('parent_item_id', $item_id)->findAll();
-        foreach ($accessories as $acc) {
-            $borrowLogModel->insert([
-                'item_id' => $acc['item_id'],
-                'user_id' => $user_id,
-                'borrow_date' => date('Y-m-d H:i:s'),
-                'expected_return_date' => $expected_return,
-                'status' => 'borrowed'
-            ]);
-
-            $historyModel->insert([
-                'item_id' => $acc['item_id'],
-                'user_id' => $user_id,
-                'action' => 'borrowed',
-                'borrowed_date' => date('Y-m-d H:i:s')
-            ]);
-        }
-
-        // ----------------- SEND EMAIL -----------------
-        $userModel = new \App\Models\Model_Users();
-        $user = $userModel->find($user_id);
-
-        $email = service('email');
-
-        $message = "
-        Hello, {$user['fullname']}!<br><br>
-        You have successfully borrowed: <b>{$equipment['item_name']}</b>.<br>
-        Included accessories: <b>" . 
-            (empty($accessories) ? 'None' : implode(', ', array_column($accessories, 'item_name'))) 
-        . "</b><br><br>
-        Borrowed Date: <b>" . date('Y-m-d H:i:s') . "</b><br>
-        Expected Return: <b>{$expected_return}</b><br><br>
-        Please ensure the item is returned on time.
-        ";
-
-        $email->setTo($user['email']);
-        $email->setSubject('Equipment Borrowed Confirmation');
-        $email->setMessage($message);
-        $email->send();
-        // ----------------------------------------------
-
-        $this->session->setFlashdata('success', 'Equipment borrowed successfully.');
-        return redirect()->to('/borrow');
     }
+
+    // --- Send email confirmation ---
+    $user = $userModel->find($user_id);
+    $email = service('email');
+
+    $message = "
+    Hello, {$user['fullname']}!<br><br>
+    You have successfully borrowed: <b>{$equipment['item_name']}</b>.<br>
+    Included accessories: <b>" . 
+        (empty($accessories) ? 'None' : implode(', ', array_column($accessories, 'item_name'))) 
+    . "</b><br><br>
+    Borrowed Date: <b>" . date('Y-m-d H:i:s') . "</b><br>
+    Expected Return: <b>{$expected_return}</b><br><br>
+    Please ensure the item is returned on time.
+    ";
+
+    $email->setTo($user['email']);
+    $email->setSubject('Equipment Borrowed Confirmation');
+    $email->setMessage($message);
+
+    if ($email->send()) {
+        $this->session->setFlashdata('success', 'Equipment borrowed successfully. Confirmation email sent.');
+    } else {
+        $this->session->setFlashdata('success', 'Equipment borrowed successfully. Failed to send email.');
+    }
+
+    return redirect()->to('/borrow');
+}
+
 }
