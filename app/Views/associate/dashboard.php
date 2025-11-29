@@ -32,9 +32,9 @@
         <div class="col-md-2 sidebar">
             <ul class="nav flex-column">
                 <li class="nav-item mb-2"><a class="nav-link active" href="#">Dashboard</a></li>
-                <li class="nav-item mb-2"><a class="nav-link" href="#">Borrow</a></li>
-                <li class="nav-item mb-2"><a class="nav-link" href="#">Return </a></li>
-                 <li class="nav-item mb-2"><a class="nav-link" href="#">Reserve</a></li>
+                <li class="nav-item mb-2"><a class="nav-link" href="<?= base_url('borrow') ?>">Borrow</a></li>
+                <li class="nav-item mb-2"><a class="nav-link" href="<?= base_url('return') ?>">Return </a></li>
+                 <li class="nav-item mb-2"><a class="nav-link" href="<?= base_url('reserve') ?>">Reserve</a></li>
                 <li class="nav-item mb-2"><a class="nav-link" href="<?= base_url('profile') ?>">Profile</a></li>
             </ul>
         </div>
