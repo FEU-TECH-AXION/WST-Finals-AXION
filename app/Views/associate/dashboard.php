@@ -3,13 +3,14 @@
 // File: app/Views/associate/dashboard.php
 // ==============================================
 ?>
-<?= $this->include('include/_associate') ?>
+<?= $this->include('include/view_nav_associate') ?>
 <style>
 .dashboard-container { min-height: 100vh; background: #f8f9fa; }
-.navbar-custom { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
+.navbar-custom { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
 .sidebar { min-height: calc(100vh - 56px); background: white; border-right: 1px solid #dee2e6; padding: 20px; }
 .content-area { padding: 30px; }
 .stat-card { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.stat-icon { font-size: 2rem; color: #667eea; }
 </style>
 <nav class="navbar navbar-custom">
     <div class="container-fluid">
