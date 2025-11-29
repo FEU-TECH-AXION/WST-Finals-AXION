@@ -210,11 +210,11 @@ class Auth extends BaseController
     private function getDashboardByRole($role)
     {
         return match($role) {
-            'itso' => '/admin/dashboard',
+            'itso' => '/itso/dashboard',
             'associate' => '/associate/dashboard',
-            'student' => '/user/dashboard',
-            default => '/login'
-    };
+            'student' => '/student/dashboard',
+            default => '/student/dashboard'
+        };
     }
 
     // HELPER: Send password reset email
