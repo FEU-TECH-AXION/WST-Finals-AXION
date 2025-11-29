@@ -3,7 +3,7 @@
 // File: app/Views/associate/dashboard.php
 // ==============================================
 ?>
-<?= $this->include('include/view_nav') ?>
+<?= $this->include('include/_associate') ?>
 <style>
 .dashboard-container { min-height: 100vh; background: #f8f9fa; }
 .navbar-custom { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
