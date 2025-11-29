@@ -7,8 +7,8 @@
                         
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h3 class="mb-0">Equipments List</h3>
-
-                            <a href="<?= base_url('equipments/add'); ?>" class="btn btn-success">
+                        
+                            <a href="<?= base_url('equipments/equipment_add'); ?>" class="btn btn-success">
                                 <span class="material-symbols-outlined align-middle">add</span>
                                 Add New Equipment
                             </a>
@@ -58,7 +58,7 @@
                                                         <span class="material-symbols-outlined">search</span>
                                                     </a>
 
-                                                    <a href="<?= base_url('equipments/edit/' . $equipment['item_id']); ?>" 
+                                                    <a href="<?= base_url('equipments/equipment_update/' . $equipment['item_id']); ?>" 
                                                        class="btn btn-warning btn-sm" 
                                                        title="Edit">
                                                         <span class="material-symbols-outlined">edit</span>
