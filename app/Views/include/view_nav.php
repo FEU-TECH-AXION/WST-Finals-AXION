@@ -1,6 +1,6 @@
 
 <?php
-// File: app/Views/templates/header.php
+// File: app/Views/inlcude/view_nav.php
 ?>
 <!DOCTYPE html>
 <html lang="en">
