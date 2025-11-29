@@ -13,10 +13,10 @@ class Reserve extends BaseController
     {
         $this->session = session();
 
-        // Check role: only Associates can access
-        if ($this->session->get('role') !== 'associate') {
-            throw new \CodeIgniter\Exceptions\PageForbiddenException('Only Associates can reserve equipment.');
-        }
+        // // Check role: only Associates can access
+        // if ($this->session->get('role') !== 'associate') {
+        //     throw new \CodeIgniter\Exceptions\PageForbiddenException('Only Associates can reserve equipment.');
+        // }
     }
 
     // Show list of equipment that can be reserved
