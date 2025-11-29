@@ -28,8 +28,8 @@ class Auth extends BaseController
         }
 
         $data['title'] = 'Login - ITSO';
-        
-        if ($this->request->getMethod() === 'post') {
+
+        if ($this->request->is('post')) {
             $rules = [
                 'email' => 'required|valid_email',
                 'password' => 'required|min_length[6]'
@@ -74,7 +74,7 @@ class Auth extends BaseController
 
         $data['title'] = 'Sign Up - ITSO';
 
-        if ($this->request->getMethod() === 'post') {
+        if ($this->request->is('post')) {
             $rules = [
                 'name' => 'required|min_length[3]|max_length[100]',
                 'email' => 'required|valid_email|is_unique[users.email]',
@@ -123,7 +123,7 @@ class Auth extends BaseController
     {
         $data['title'] = 'Forgot Password - ITSO';
 
-        if ($this->request->getMethod() === 'post') {
+        if ($this->request->is('post')) {
             $rules = ['email' => 'required|valid_email'];
 
             if (!$this->validate($rules)) {
@@ -174,7 +174,7 @@ class Auth extends BaseController
             return view('auth/reset_password', $data);
         }
 
-        if ($this->request->getMethod() === 'post') {
+        if ($this->request->is('post')) { 
             $rules = [
                 'password' => 'required|min_length[6]',
                 'confirm_password' => 'required|matches[password]'
