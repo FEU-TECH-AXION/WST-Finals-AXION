@@ -25,16 +25,19 @@
                             <!-- Item Type -->
                             <div class="form-group mb-3">
                                 <label for="item_type" class="form-label">Item Type</label>
-                                <input type="text" 
-                                       name="item_type" 
-                                       id="item_type"
-                                       class="form-control <?= isset($validation) && $validation->hasError('item_type') ? 'is-invalid' : '' ?>"
-                                       value="<?= set_value('item_type') ?>">
+                                <select name="item_type" 
+                                        id="item_type" 
+                                        class="form-control <?= isset($validation) && $validation->hasError('item_type') ? 'is-invalid' : '' ?>">
+                                    <option value="">Select Item Type</option>
+                                    <option value="Equipment" <?= set_select('item_type', 'Equipment') ?>>Equipment</option>
+                                    <option value="Accessory" <?= set_select('item_type', 'Accessory') ?>>Accessory</option>
+                                </select>
 
                                 <div class="invalid-feedback">
                                     <?= isset($validation) ? $validation->getError('item_type') : '' ?>
                                 </div>
                             </div>
+
 
                             <!-- Parent Item (nullable) -->
                             <div class="form-group mb-3">

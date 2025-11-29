@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2025 at 05:02 PM
+-- Generation Time: Nov 29, 2025 at 10:05 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -107,6 +107,21 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `password_reset_tokens`
+--
+
+CREATE TABLE `password_reset_tokens` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `expires_at` datetime NOT NULL,
+  `used` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `reservation`
 --
 
@@ -130,86 +145,36 @@ CREATE TABLE `reservation` (
 
 CREATE TABLE `users` (
   `user_id` varchar(20) NOT NULL,
-  `first_name` varchar(100) NOT NULL,
-  `middle_name` varchar(100) DEFAULT NULL,
-  `last_name` varchar(100) NOT NULL,
-  `extension_name` varchar(20) DEFAULT NULL,
+  `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `user_photo` varchar(255) DEFAULT NULL,
+  `profile_photo` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum('itso','associate','student') NOT NULL,
   `status` enum('active','inactive') DEFAULT 'active',
-  `verify_token` varchar(255) DEFAULT NULL,
-  `isverified` tinyint(1) DEFAULT 0,
   `date_created` datetime DEFAULT current_timestamp(),
   `date_updated` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Triggers `users`
+-- Dumping data for table `users`
 --
-DELIMITER $$
-CREATE TRIGGER `trg_users_before_insert` BEFORE INSERT ON `users` FOR EACH ROW BEGIN
-    DECLARE prefix VARCHAR(10);
-    DECLARE max_id INT;
 
-    -- Set lowercase prefix based on role
-    IF NEW.role = 'student' THEN
-        SET prefix = 'STU-';
-    ELSEIF NEW.role = 'associate' THEN
-        SET prefix = 'ASSO-';
-    ELSEIF NEW.role = 'itso' THEN
-        SET prefix = 'ITSO-';
-    ELSE
-        SET prefix = 'user-';
-    END IF;
-
-    -- Only generate ID if empty
-    IF NEW.user_id IS NULL OR NEW.user_id = '' THEN
-        SET max_id = (SELECT IFNULL(MAX(CAST(SUBSTRING(user_id, LENGTH(prefix)+1) AS UNSIGNED)), 0)
-                      FROM users
-                      WHERE user_id LIKE CONCAT(prefix, '%'));
-
-        SET NEW.user_id = CONCAT(prefix, LPAD(max_id + 1, 4, '0'));
-    END IF;
-END
-$$
-DELIMITER ;
+INSERT INTO `users` (`user_id`, `name`, `email`, `profile_photo`, `password`, `role`, `status`, `date_created`, `date_updated`) VALUES
+('', 'Admin User', 'admin@example.com', 'default-avatar.png', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'itso', 'active', '2025-11-29 13:09:52', '2025-11-29 16:20:49'),
+('ASC001', 'Default Associate', 'associate@example.com', 'default-avatar.png', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'associate', 'active', '2025-11-29 16:58:53', '2025-11-29 16:59:18'),
+('STD001', 'Default Student', 'student@example.com', 'default-avatar.png', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'student', 'active', '2025-11-29 13:18:40', '2025-11-29 16:54:01');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `borrow_log`
+-- Indexes for table `password_reset_tokens`
 --
-ALTER TABLE `borrow_log`
-  ADD PRIMARY KEY (`borrow_id`),
-  ADD KEY `item_id` (`item_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `history`
---
-ALTER TABLE `history`
-  ADD PRIMARY KEY (`history_id`),
-  ADD KEY `item_id` (`item_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `inventory`
---
-ALTER TABLE `inventory`
-  ADD PRIMARY KEY (`item_id`),
-  ADD KEY `parent_item_id` (`parent_item_id`);
-
---
--- Indexes for table `reservation`
---
-ALTER TABLE `reservation`
-  ADD PRIMARY KEY (`reservation_id`),
-  ADD KEY `item_id` (`item_id`),
-  ADD KEY `user_id` (`user_id`);
+ALTER TABLE `password_reset_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_email` (`email`),
+  ADD KEY `idx_token` (`token`);
 
 --
 -- Indexes for table `users`
@@ -223,53 +188,10 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `borrow_log`
+-- AUTO_INCREMENT for table `password_reset_tokens`
 --
-ALTER TABLE `borrow_log`
-  MODIFY `borrow_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `history`
---
-ALTER TABLE `history`
-  MODIFY `history_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `reservation`
---
-ALTER TABLE `reservation`
-  MODIFY `reservation_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `borrow_log`
---
-ALTER TABLE `borrow_log`
-  ADD CONSTRAINT `borrow_log_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `inventory` (`item_id`),
-  ADD CONSTRAINT `borrow_log_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-
---
--- Constraints for table `history`
---
-ALTER TABLE `history`
-  ADD CONSTRAINT `history_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `inventory` (`item_id`),
-  ADD CONSTRAINT `history_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-
---
--- Constraints for table `inventory`
---
-ALTER TABLE `inventory`
-  ADD CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`parent_item_id`) REFERENCES `inventory` (`item_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `reservation`
---
-ALTER TABLE `reservation`
-  ADD CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `inventory` (`item_id`),
-  ADD CONSTRAINT `reservation_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+ALTER TABLE `password_reset_tokens`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
