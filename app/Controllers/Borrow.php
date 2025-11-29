@@ -15,7 +15,7 @@ class Borrow extends BaseController
         $this->session = session();
     }
 
-    public function index($perpage = 10)
+    public function index($perpage = 5)
     {
         $equipmentsModel = new Model_Equipments();
 
@@ -48,10 +48,14 @@ class Borrow extends BaseController
         // Get accessories
         $accessories = $equipmentsModel->where('parent_item_id', $id)->findAll();
 
+        // Calculate default expected return date (5 days from now)
+        $defaultReturnDate = date('Y-m-d', strtotime('+5 days'));
+
         $data = [
             'title' => "Axion - Borrow Equipment",
             'equipment' => $equipment,
-            'accessories' => $accessories
+            'accessories' => $accessories,
+            'default_return_date' => $defaultReturnDate
         ];
 
         return view('include/view_head', $data)
@@ -59,6 +63,7 @@ class Borrow extends BaseController
             . view('view_borrow_form', $data)
             . view('include/view_footer');
     }
+
 
      // Borrow submission
     public function submit()
@@ -111,6 +116,29 @@ class Borrow extends BaseController
                 'borrowed_date' => date('Y-m-d H:i:s')
             ]);
         }
+
+        // ----------------- SEND EMAIL -----------------
+        $userModel = new \App\Models\Model_Users();
+        $user = $userModel->find($user_id);
+
+        $email = service('email');
+
+        $message = "
+        Hello, {$user['fullname']}!<br><br>
+        You have successfully borrowed: <b>{$equipment['item_name']}</b>.<br>
+        Included accessories: <b>" . 
+            (empty($accessories) ? 'None' : implode(', ', array_column($accessories, 'item_name'))) 
+        . "</b><br><br>
+        Borrowed Date: <b>" . date('Y-m-d H:i:s') . "</b><br>
+        Expected Return: <b>{$expected_return}</b><br><br>
+        Please ensure the item is returned on time.
+        ";
+
+        $email->setTo($user['email']);
+        $email->setSubject('Equipment Borrowed Confirmation');
+        $email->setMessage($message);
+        $email->send();
+        // ----------------------------------------------
 
         $this->session->setFlashdata('success', 'Equipment borrowed successfully.');
         return redirect()->to('/borrow');

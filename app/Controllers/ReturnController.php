@@ -13,6 +13,7 @@ class ReturnController extends BaseController
     public function __construct()
     {
         $this->session = session();
+
     }
 
     // Show borrowed items for the logged-in user
