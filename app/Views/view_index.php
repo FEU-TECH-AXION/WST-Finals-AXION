@@ -4,14 +4,7 @@
         <img src="<?= base_url('/public/assets/img/logoWhite.png') ?>" alt="Lola Nena’s Sisigan Logo" class="hero-logo">
         
         <h5>
-            <p class="mt-3 fst-italic fs-5 text-warning">
-                Computer Services Unit
-            </p>
-            <br>
-            The Computer Services Unit provides technical support and <br>
-            assistance to the users of the Institutes’ Information Technology <br>
-            and Communications facilities. They are also in charge of the ICT <br>
-            infrastructure’s operation, configuration, and administration. <br><br>
+            Technical support and assistance are provided to users of the Institute’s Information Technology and Communications facilities—including the operation, configuration, and administration of its ICT infrastructure—while systems and applications are created and developed to meet the business processes and operational requirements of the Institute’s academic and administrative offices. <br><br>
         </h5>
     </div>
     </section>
