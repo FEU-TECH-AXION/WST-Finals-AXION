@@ -29,7 +29,10 @@ $routes->get('equipments/edit/(:any)', 'Equipments::edit/$1');
 $routes->post('equipments/update/(:any)', 'Equipments::update/$1');
 $routes->get('equipments/delete/(:any)', 'Equipments::delete/$1');
 
-// Routes for the ____ controllers
+// Routes for the Borrow controllers
+$routes->get('borrow', 'Borrow::index');
+$routes->get('borrow/form/(:segment)', 'Borrow::form/$1');
+$routes->post('borrow/submit/(:any)', 'Borrow::submit');
 
 // Authentication routes
 $routes->match(['get', 'post'], 'login', 'Auth::login');
