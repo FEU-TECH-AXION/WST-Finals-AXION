@@ -29,3 +29,29 @@ $routes->post('equipments/equipment_update/(:num)', 'Equipments::update/$1');
 $routes->get('equipments/equipment_delete/(:num)', 'Equipments::delete/$1');
 
 // Routes for the ____ controllers
+
+// Authentication routes
+$routes->match(['get', 'post'], 'login', 'Auth::login');
+$routes->match(['get', 'post'], 'signup', 'Auth::signup');
+$routes->match(['get', 'post'], 'forgot-password', 'Auth::forgotPassword');
+$routes->match(['get', 'post'], 'reset-password/(:any)', 'Auth::resetPassword/$1');
+$routes->get('logout', 'Auth::logout');
+
+// Profile routes (protected)
+$routes->get('profile', 'Profile::index', ['filter' => 'auth']);
+$routes->post('profile/update', 'Profile::update', ['filter' => 'auth']);
+
+// Admin routes (protected)
+$routes->group('admin', ['filter' => 'auth:admin'], function($routes) {
+    $routes->get('dashboard', 'Admin\Dashboard::index');
+});
+
+// Associate routes (protected)
+$routes->group('associate', ['filter' => 'auth:associate'], function($routes) {
+    $routes->get('dashboard', 'Associate\Dashboard::index');
+});
+
+// User routes (protected)
+$routes->group('user', ['filter' => 'auth:user'], function($routes) {
+    $routes->get('dashboard', 'User\Dashboard::index');
+});
