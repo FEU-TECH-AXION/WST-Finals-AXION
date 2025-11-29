@@ -1,6 +1,6 @@
 <?php
 // ==============================================
-// File: app/Views/admin/dashboard.php
+// File: app/Views/itso/dashboard.php
 // ==============================================
 ?>
 <?= $this->include('include/view_nav_itso') ?>
@@ -31,14 +31,15 @@
     <div class="row g-0">
         <div class="col-md-2 sidebar">
             <ul class="nav flex-column">
-                <li class="nav-item mb-2"><a class="nav-link active" href="#">Dashboard</a></li>
-                <li class="nav-item mb-2"><a class="nav-link" href="#">User Management</a></li>
+                <li class="nav-item mb-2"><a class="nav-link active" href="<?= base_url('itso/dashboard') ?>">Dashboard</a></li>
+                <li class="nav-item mb-2"><a class="nav-link" href="<?= base_url('itso/users') ?>">User Management</a></li>
                 <li class="nav-item mb-2"><a class="nav-link" href="<?= base_url('equipments') ?>">Equipment Management</a></li>
                 <li class="nav-item mb-2"><a class="nav-link" href="#">Reports</a></li>
                 <li class="nav-item mb-2"><a class="nav-link" href="<?= base_url('profile') ?>">Profile</a></li>
                 <li class="nav-item mb-2"><a class="nav-link" href="#">Settings</a></li>
             </ul>
         </div>
+        
         <div class="col-md-10 content-area">
             <h2 class="mb-4">Admin Dashboard</h2>
             <div class="row">
@@ -52,4 +53,3 @@
     </div>
 </div>
 <?= $this->include('include/view_footer') ?>
-

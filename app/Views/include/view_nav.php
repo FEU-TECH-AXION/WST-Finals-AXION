@@ -18,8 +18,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="<?= base_url('/') ?>">
-                <img src="<?= base_url('/public/assets/img/logoPlaceholder.png') ?>" alt="Logo" height="40" class="me-2">
-                ITSO
+                <img src="<?= base_url('/public/assets/img/logoPurple.png') ?>" alt="Logo" height="40" class="me-2">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>

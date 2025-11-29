@@ -59,3 +59,32 @@ $routes->group('associate', ['filter' => 'auth:associate'], function($routes) {
 $routes->group('student', ['filter' => 'auth:student'], function($routes) {
     $routes->get('dashboard', 'Student\Dashboard::index');
 });
+
+// ==========================================
+// ITSO Routes (Protected - ITSO Personnel Only)
+// ==========================================
+$routes->group('itso', ['filter' => 'auth'], function($routes) {
+    // Dashboard
+    $routes->get('dashboard', 'ItsoController::dashboard');
+    
+    // Debug (temporary - remove in production)
+    $routes->get('debug', function() {
+        return view('debug_session');
+    });
+    
+    // User Management
+    $routes->get('users', 'ItsoController::users');
+    $routes->post('users/create', 'ItsoController::createUser');
+    $routes->post('users/update', 'ItsoController::updateUser');
+    $routes->get('users/deactivate/(:segment)', 'ItsoController::deactivateUser/$1');
+    $routes->get('users/activate/(:segment)', 'ItsoController::activateUser/$1');
+    
+    // Equipment Management (if needed)
+    $routes->get('equipments', 'EquipmentController::index');
+    
+    // Reports
+    $routes->get('reports', 'ReportController::index');
+    
+    // Settings
+    $routes->get('settings', 'SettingsController::index');
+});
