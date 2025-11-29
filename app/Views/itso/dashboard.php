@@ -3,7 +3,7 @@
 // File: app/Views/admin/dashboard.php
 // ==============================================
 ?>
-<?= $this->include('include/view_nav') ?>
+<?= $this->include('include/view_nav_itso') ?>
 <style>
 .dashboard-container { min-height: 100vh; background: #f8f9fa; }
 .navbar-custom { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
@@ -17,7 +17,7 @@
         <span class="navbar-brand mb-0 h1 text-white">ITSO Admin Dashboard</span>
         <div class="d-flex align-items-center">
             <?php 
-            $photoPath = session()->get('profile_photo') 
+            $photoPath = session()->get('profile_photo')
                 ? base_url('public/uploads/profiles/' . session()->get('profile_photo'))
                 : base_url('/public/assets/img/default-avatar.png');
             ?>
@@ -33,7 +33,7 @@
             <ul class="nav flex-column">
                 <li class="nav-item mb-2"><a class="nav-link active" href="#">Dashboard</a></li>
                 <li class="nav-item mb-2"><a class="nav-link" href="#">User Management</a></li>
-                <li class="nav-item mb-2"><a class="nav-link" href="#">Service Requests</a></li>
+                <li class="nav-item mb-2"><a class="nav-link" href="<?= base_url('equipments') ?>">Equipment Management</a></li>
                 <li class="nav-item mb-2"><a class="nav-link" href="#">Reports</a></li>
                 <li class="nav-item mb-2"><a class="nav-link" href="<?= base_url('profile') ?>">Profile</a></li>
                 <li class="nav-item mb-2"><a class="nav-link" href="#">Settings</a></li>
