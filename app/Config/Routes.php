@@ -41,6 +41,9 @@ $routes->get('return/form/(:segment)', 'ReturnController::form/$1');
 $routes->post('return/submit', 'ReturnController::submit');
 
 // Routes for the Reserve controllers
+$routes->get('reserve', 'Reserve::index');
+$routes->get('reserve/form/(:segment)', 'Reserve::form/$1');
+$routes->post('reserve/submit', 'Reserve::submit');
 
 // Routes for Record / History controllers
 $routes->get('reports', 'Report::index');

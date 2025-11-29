@@ -17,10 +17,10 @@
 
                         <form method="get" class="mb-3 d-flex align-items-center gap-2">
                             <label>Filter by Condition:</label>
-                            <select name="condition" class="form-select w-auto">
+                            <select name="active_condition" class="form-select w-auto">
                                 <option value="">All</option>
-                                <option value="good" <?= ($conditionFilter ?? '')=='good' ? 'selected' : '' ?>>Good</option>
-                                <option value="fair" <?= ($conditionFilter ?? '')=='fair' ? 'selected' : '' ?>>Fair</option>
+                                <option value="good" <?= ($activeCondition ?? '')=='good' ? 'selected' : '' ?>>Good</option>
+                                <option value="fair" <?= ($activeCondition ?? '')=='fair' ? 'selected' : '' ?>>Fair</option>
                             </select>
                             <button type="submit" class="btn btn-secondary btn-sm">Filter</button>
                         </form>
@@ -63,10 +63,12 @@
 
                         <form method="get" class="mb-3 d-flex align-items-center gap-2">
                             <label>Filter by Condition:</label>
-                            <select name="condition" class="form-select w-auto">
+                            <select name="unusable_condition" class="form-select w-auto">
                                 <option value="">All</option>
-                                <option value="broken" <?= ($conditionFilter ?? '')=='broken' ? 'selected' : '' ?>>Broken</option>
-                                <option value="under repair" <?= ($conditionFilter ?? '')=='under repair' ? 'selected' : '' ?>>Under Repair</option>
+                                <option value="poor" <?= ($unusableCondition ?? '')=='poor' ? 'selected' : '' ?>>Poor</option>
+                                <option value="broken" <?= ($unusableCondition ?? '')=='broken' ? 'selected' : '' ?>>Broken</option>
+                                <option value="under repair" <?= ($unusableCondition ?? '')=='under repair' ? 'selected' : '' ?>>Under Repair</option>
+
                             </select>
                             <button type="submit" class="btn btn-secondary btn-sm">Filter</button>
                         </form>
@@ -134,7 +136,7 @@
                                     <?php if (!empty($history)): ?>
                                         <?php foreach ($history as $h): ?>
                                             <tr>
-                                                <td><?= esc($h['first_name'].' '.$h['last_name']); ?></td>
+                                                <td><?= esc($h['name']); ?></td>
                                                 <td><?= esc(ucfirst($h['role'])); ?></td>
                                                 <td><?= esc($h['item_name']); ?></td>
                                                 <td><?= esc(ucfirst($h['action'])); ?></td>
