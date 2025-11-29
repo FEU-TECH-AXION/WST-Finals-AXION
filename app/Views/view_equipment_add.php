@@ -8,6 +8,16 @@
                         <form action="<?= base_url('equipments/insert') ?>" method="post">
                             <h4 class="mb-3 text-center">Add New Equipment</h4>
 
+                            <?php if (session()->has('errors')): ?>
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        <?php foreach (session('errors') as $error): ?>
+                                            <li><?= esc($error) ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                            <?php endif; ?>
+
                             <!-- Item Name -->
                             <div class="form-group mb-3">
                                 <label for="item_name" class="form-label">Item Name</label>
@@ -118,7 +128,7 @@
                             <!-- Buttons -->
                             <div class="form-group text-center">
                                 <button type="submit" class="btn btn-success px-4">Save</button>
-                                <a href="<?= base_url('equipments/insert'); ?>" class="btn btn-warning px-4">Back</a>
+                                <a href= "<?= base_url('equipments'); ?>" class="btn btn-warning px-4">Back</a>
                             </div>
 
                         </form>

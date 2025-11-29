@@ -68,7 +68,16 @@
                                 <input type="text" 
                                        class="form-control" 
                                        readonly
-                                       value="<?= esc($equipment['datecreated']); ?>">
+                                       value="<?= esc($equipment['date_created']); ?>">
+                            </div>
+
+                           <!-- Date Updated -->
+                            <div class="form-group mb-2">
+                                <label class="form-label">Date Updated</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       readonly
+                                       value="<?= esc($equipment['date_updated']); ?>">
                             </div>
 
                             <div class="form-group mt-3">
