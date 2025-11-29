@@ -16,7 +16,7 @@
 </style>
 <nav class="navbar navbar-custom">
     <div class="container-fluid">
-        <span class="navbar-brand mb-0 h1 text-white">ITSO User Portal</span>
+        <span class="navbar-brand mb-0 h1 text-white">AXION User Portal</span>
         <div class="d-flex align-items-center">
             <?php 
             $photoPath = session()->get('profile_photo') 
@@ -33,9 +33,9 @@
     <div class="row g-0">
         <div class="col-md-2 sidebar">
             <ul class="nav flex-column">
-                <li class="nav-item mb-2"><a class="nav-link active" href="#">Dashboard</a></li>
-                <li class="nav-item mb-2"><a class="nav-link" href="#">My Requests</a></li>
-                <li class="nav-item mb-2"><a class="nav-link" href="#">Submit Request</a></li>
+                <li class="nav-item mb-2"><a class="nav-link active" href="<?= base_url('student/dashboard#') ?>">Dashboard</a></li>
+                <li class="nav-item mb-2"><a class="nav-link" href="<?= base_url('borrow') ?>">Borrow</a></li>
+                <li class="nav-item mb-2"><a class="nav-link" href="<?= base_url('borrow') ?>">Return</a></li>
                 <li class="nav-item mb-2"><a class="nav-link" href="<?= base_url('profile') ?>">Profile</a></li>
             </ul>
         </div>
