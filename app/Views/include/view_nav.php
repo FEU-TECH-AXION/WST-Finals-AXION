@@ -39,9 +39,10 @@
                         <?php 
                         $role = session()->get('role');
                         $dashboardLink = match($role) {
-                            'admin' => '/admin/dashboard',
+                            'itso' => '/itso/dashboard',
                             'associate' => '/associate/dashboard',
-                            default => '/user/dashboard'
+                            'student' => '/student/dashboard',
+                            default => '/student/dashboard'
                         };
                         ?>
                         <li class="nav-item">
