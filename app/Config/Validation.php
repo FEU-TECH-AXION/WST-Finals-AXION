@@ -111,7 +111,44 @@ class Validation extends BaseConfig
     // --------------------------------------------------------------------
 
     public array $addInventory = [
-        // rules when creating inventory
+        'item_name' => [
+            'label'  => 'Item Name',
+            'rules'  => "required|regex_match[/^[A-Za-z\s,'-]+$/]",
+            'errors' => [
+                'required'    => 'Item name is required.',
+                'regex_match' => 'Item name must contain only letters, spaces, comma, and apostrophe.',
+            ],
+        ],
+        'item_type' => [
+            'label'  => 'Item Type',
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'Item type is required.',
+            ],
+        ],
+        'quantity' => [
+            'label'  => 'Quantity',
+            'rules'  => 'required|integer|greater_than[0]',
+            'errors' => [
+                'required'     => 'Quantity is required.',
+                'integer'      => 'Quantity must be a whole number.',
+                'greater_than' => 'Quantity must be greater than 0.',
+            ],
+        ],
+        'location' => [
+            'label'  => 'Location',
+            'rules'  => 'permit_empty|max_length[50]',
+            'errors' => [
+                'max_length' => 'Location must not exceed 50 characters.',
+            ],
+        ],
+        'status' => [
+            'label'  => 'Status',
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'Status is required.',
+            ],
+        ],
     ];
 
     public array $editInventory = [
