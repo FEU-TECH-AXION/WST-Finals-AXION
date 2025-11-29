@@ -115,7 +115,7 @@
                             <!-- Buttons -->
                             <div class="form-group text-center">
                                 <button type="submit" class="btn btn-success px-4">Save</button>
-                                <a href="<?= base_url('equipments'); ?>" class="btn btn-warning px-4">Back</a>
+                                <a href="<?= base_url('equipments/insert'); ?>" class="btn btn-warning px-4">Back</a>
                             </div>
 
                         </form>
