@@ -1,7 +1,7 @@
 <?php
 // File: app/Views/profile.php
 ?>
-<?= $this->include('include/header') ?>
+<?= $this->include('include/view_head') ?>
 
 <style>
 .profile-container { min-height: 100vh; background: #f8f9fa; padding: 30px 0; }

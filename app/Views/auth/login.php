@@ -1,7 +1,7 @@
 <?php
 // File: app/Views/auth/login.php
 ?>
-<?= $this->include('include/header') ?>
+<?= $this->include('include/view_head') ?>
 
 <style>
 .auth-container {
