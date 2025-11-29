@@ -7,7 +7,7 @@ class Index extends BaseController {
 
         // Add dynamic data to the views
         $data = array(
-            'title' => 'TW33 App - Index',
+            'title' => ' AXION App Landing',
             // This can be from the database
             'name' => 'JayCee', 
         );
