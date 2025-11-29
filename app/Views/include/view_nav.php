@@ -52,7 +52,7 @@
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="btn btn-primary btn-sm ms-2" href="<?= base_url('login') ?>">Login</a>
+                            <a class="btn btn-login btn-sm ms-2" href="<?= base_url('login') ?>">Login</a>
                         </li>
                     <?php endif; ?>
                 </ul>
