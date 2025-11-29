@@ -99,14 +99,17 @@
                                         id="status"
                                         class="form-control <?= isset($validation) && $validation->hasError('status') ? 'is-invalid' : '' ?>">
                                     <option value="">Select Status</option>
-                                    <option value="Available" <?= set_select('status', 'Available', $equipment['status'] == 'Available') ?>>Available</option>
-                                    <option value="Unavailable" <?= set_select('status', 'Unavailable', $equipment['status'] == 'Unavailable') ?>>Unavailable</option>
-                                    <option value="Under Repair" <?= set_select('status', 'Under Repair', $equipment['status'] == 'Under Repair') ?>>Under Repair</option>
+
+                                    <option value="active" <?= set_select('status', 'active', $equipment['status'] == 'active') ?>>Active</option>
+                                    <option value="unusable" <?= set_select('status', 'unusable', $equipment['status'] == 'unusable') ?>>Unusable</option>
+                                    <option value="under repair" <?= set_select('status', 'under repair', $equipment['status'] == 'under repair') ?>>Under Repair</option>
+
                                 </select>
                                 <div class="invalid-feedback">
                                     <?= isset($validation) ? $validation->getError('status') : '' ?>
                                 </div>
                             </div>
+
 
                             <!-- Buttons -->
                             <div class="form-group text-center">
