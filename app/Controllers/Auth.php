@@ -118,7 +118,6 @@ class Auth extends BaseController
         return view('auth/signup', $data);
     }
 
-
     // LOGOUT
     public function logout()
     {
@@ -126,139 +125,96 @@ class Auth extends BaseController
         return redirect()->to('/');
     }
 
-    // HELPER: Get dashboard by role
-    private function getDashboardByRole($role)
+    // FORGOT PASSWORD - Show form and process submission
+    public function forgotPassword()
     {
-        return match($role) {
-            'itso' => '/itso/dashboard',
-            'associate' => '/associate/dashboard',
-            'student' => '/student/dashboard',
-            default => '/student/dashboard'
-        };
-    }
-
-    // HELPER: Send password reset email
-    private function sendPasswordResetEmail($email, $token)
-    {
-        $resetLink = base_url("reset-password/$token");
-
-        $emailService = \Config\Services::email();
-        $emailService->setFrom('noreply@itso.com', 'ITSO Support');
-        $emailService->setTo($email);
-        $emailService->setSubject('Password Reset Request');
-
-        $message = "Click the link below to reset your password:\n\n";
-        $message .= "$resetLink\n\n";
-        $message .= "This link will expire in 1 hour.\n\n";
-        $message .= "If you didn't request this, please ignore this email.";
-
-        $emailService->setMessage($message);
-        $emailService->send();
-    }
-
-    // Show forgot password form
-public function forgotPassword()
-{
-    // If already logged in, redirect to appropriate dashboard
-    if (session()->get('logged_in')) {
-        $role = session()->get('role');
-        if ($role === 'itso') {
-            return redirect()->to(base_url('itso/dashboard'));
+        // If already logged in, redirect to dashboard
+        if ($this->session->get('logged_in')) {
+            return redirect()->to($this->getDashboardByRole($this->session->get('role')));
         }
-        return redirect()->to(base_url('/'));
-    }
 
-    return view('auth/forgot_password');
-}
+        // If GET request, show the form
+        if ($this->request->getMethod() !== 'post') {
+            return view('auth/forgot_password');
+        }
 
-// Process forgot password request
-public function processForgotPassword()
-{
-    $validation = \Config\Services::validation();
-    
-    $rules = [
-        'email' => 'required|valid_email'
-    ];
+        // Process POST request
+        $validation = \Config\Services::validation();
+        
+        $rules = [
+            'email' => 'required|valid_email'
+        ];
 
-    if (!$this->validate($rules)) {
-        return redirect()->back()->withInput()->with('validation', $validation);
-    }
+        if (!$this->validate($rules)) {
+            return redirect()->back()->withInput()->with('validation', $validation);
+        }
 
-    $email = $this->request->getPost('email');
-    
-    // Load user model
-    $userModel = new \App\Models\UserModel();
-    $user = $userModel->where('email', $email)->first();
+        $email = $this->request->getPost('email');
 
-    // Always show success message for security (don't reveal if email exists)
-    if ($user) {
-        // Generate reset token
+        // Check if email exists - using Model_users
+        $user = $this->userModel->where('email', $email)->first();
+
+        if (!$user) {
+            // Don't reveal if email exists or not (security best practice)
+            return redirect()->back()
+                        ->with('success', 'If that email exists in our system, you will receive reset instructions shortly.');
+        }
+
+        // Generate token
         $token = bin2hex(random_bytes(32));
         $expiry = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+        // Store in database - using Model_password_reset
+        // Delete any existing unused tokens for this email
+        $this->passwordResetModel->where('email', $email)->where('used', 0)->delete();
         
-        // Store token in database (you'll need to create a password_reset table)
-        $resetModel = new \App\Models\PasswordResetModel();
-        $resetModel->insert([
+        $this->passwordResetModel->insert([
             'email' => $email,
             'token' => $token,
             'expiry' => $expiry,
-            'created_at' => date('Y-m-d H:i:s')
+            'used' => 0
         ]);
 
-        // Send email with reset link
-        $resetLink = base_url('reset-password/' . $token);
-        
-        // Email sending code here
-        $emailService = \Config\Services::email();
-        $emailService->setTo($email);
-        $emailService->setFrom('noreply@yourdomain.com', 'ITSO System');
-        $emailService->setSubject('Password Reset Request');
-        $emailService->setMessage("
-            <h3>Password Reset Request</h3>
-            <p>Hello {$user['name']},</p>
-            <p>You requested to reset your password. Click the link below to proceed:</p>
-            <p><a href='{$resetLink}'>Reset Password</a></p>
-            <p>This link will expire in 1 hour.</p>
-            <p>If you didn't request this, please ignore this email.</p>
-        ");
+        // Send email
+        $sent = $this->sendResetEmail($email, $token);
 
-        if ($emailService->send()) {
+        if ($sent) {
             log_message('info', 'Password reset email sent to: ' . $email);
+            return redirect()->back()
+                        ->with('success', 'Reset instructions have been sent to your email address.');
         } else {
             log_message('error', 'Failed to send password reset email to: ' . $email);
+            return redirect()->back()
+                        ->with('error', 'Failed to send email. Please try again later.');
         }
     }
 
-    // Always return success for security
-    return redirect()->back()
-                     ->with('success', 'If your email is registered, you will receive password reset instructions shortly.');
-}
+    // SHOW RESET PASSWORD FORM
+    public function showResetPassword()
+    {
+        $token = $this->request->getGet('token');
+        
+        if (!$token) {
+            return redirect()->to(base_url('forgot-password'))
+                        ->with('error', 'Invalid reset link.');
+        }
 
-// Show reset password form
-public function resetPassword($token = null)
-{
-    if (!$token) {
-        return redirect()->to(base_url('forgot-password'))
-                       ->with('error', 'Invalid reset link.');
+        // Verify token exists and is valid
+        $resetData = $this->passwordResetModel->where('token', $token)
+                            ->where('expiry >=', date('Y-m-d H:i:s'))
+                            ->where('used', 0)
+                            ->first();
+
+        if (!$resetData) {
+            return redirect()->to(base_url('forgot-password'))
+                        ->with('error', 'This reset link has expired or is invalid.');
+        }
+
+        $data['token'] = $token;
+        return view('auth/reset_password', $data);
     }
 
-    // Verify token
-    $resetModel = new \App\Models\PasswordResetModel();
-    $resetData = $resetModel->where('token', $token)
-                           ->where('expiry >=', date('Y-m-d H:i:s'))
-                           ->where('used', 0)
-                           ->first();
-
-    if (!$resetData) {
-        return redirect()->to(base_url('forgot-password'))
-                       ->with('error', 'This reset link has expired or is invalid.');
-    }
-
-    $data['token'] = $token;
-    return view('auth/reset_password', $data);
-}
-
-    // Process password reset
+    // PROCESS RESET PASSWORD
     public function processResetPassword()
     {
         $validation = \Config\Services::validation();
@@ -277,8 +233,7 @@ public function resetPassword($token = null)
         $password = $this->request->getPost('password');
 
         // Verify token again
-        $resetModel = new \App\Models\PasswordResetModel();
-        $resetData = $resetModel->where('token', $token)
+        $resetData = $this->passwordResetModel->where('token', $token)
                             ->where('expiry >=', date('Y-m-d H:i:s'))
                             ->where('used', 0)
                             ->first();
@@ -288,17 +243,16 @@ public function resetPassword($token = null)
                         ->with('error', 'This reset link has expired or is invalid.');
         }
 
-        // Update password
-        $userModel = new \App\Models\UserModel();
-        $user = $userModel->where('email', $resetData['email'])->first();
+        // Update password - using Model_users
+        $user = $this->userModel->where('email', $resetData['email'])->first();
 
         if ($user) {
-            $userModel->update($user['user_id'], [
+            $this->userModel->update($user['user_id'], [
                 'password' => password_hash($password, PASSWORD_DEFAULT)
             ]);
 
             // Mark token as used
-            $resetModel->update($resetData['id'], ['used' => 1]);
+            $this->passwordResetModel->update($resetData['id'], ['used' => 1]);
 
             log_message('info', 'Password reset successful for: ' . $resetData['email']);
 
@@ -310,5 +264,111 @@ public function resetPassword($token = null)
                     ->with('error', 'An error occurred. Please try again.');
     }
 
-}
+    // SEND RESET EMAIL
+    private function sendResetEmail($email, $token)
+    {
+        $emailConfig = new \Config\Email();
+        $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
 
+        try {
+            // Server settings
+            $mail->isSMTP();
+            $mail->Host       = $emailConfig->SMTPHost;
+            $mail->SMTPAuth   = true;
+            $mail->Username   = $emailConfig->SMTPUser;
+            $mail->Password   = $emailConfig->SMTPPass;
+            $mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port       = $emailConfig->SMTPPort;
+
+            // Recipients
+            $mail->setFrom($emailConfig->fromEmail, $emailConfig->fromName);
+            $mail->addAddress($email);
+
+            // Content
+            $mail->isHTML(true);
+            $mail->Subject = 'Password Reset Request';
+
+            $resetLink = base_url('reset-password?token=' . $token);
+
+            $mail->Body = "
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>
+                        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+                        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+                        .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
+                        .button { display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white !important; padding: 15px 30px; text-decoration: none; border-radius: 5px; margin: 20px 0; font-weight: bold; }
+                        .footer { text-align: center; margin-top: 20px; font-size: 12px; color: #666; }
+                        .warning { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 5px; }
+                        .link-box { background: white; padding: 10px; border-radius: 5px; word-break: break-all; border: 1px solid #ddd; margin: 10px 0; }
+                    </style>
+                </head>
+                <body>
+                    <div class='container'>
+                        <div class='header'>
+                            <h1 style='margin: 0;'>🔒 Password Reset Request</h1>
+                        </div>
+                        <div class='content'>
+                            <p>Hello,</p>
+                            <p>We received a request to reset your password. Click the button below to create a new password:</p>
+                            
+                            <div style='text-align: center;'>
+                                <a href='{$resetLink}' class='button'>Reset Password</a>
+                            </div>
+                            
+                            <p>Or copy and paste this link into your browser:</p>
+                            <div class='link-box'>
+                                <a href='{$resetLink}' style='color: #667eea;'>{$resetLink}</a>
+                            </div>
+                            
+                            <div class='warning'>
+                                <strong>⏰ Important:</strong> This link will expire in 1 hour for security reasons.
+                            </div>
+                            
+                            <p><strong>⚠️ If you didn't request this password reset, please ignore this email.</strong> Your password will remain unchanged and secure.</p>
+                            
+                            <hr style='border: none; border-top: 1px solid #ddd; margin: 30px 0;'>
+                            
+                            <p style='margin-bottom: 5px;'>Best regards,</p>
+                            <p style='margin-top: 0;'><strong>ITSO Team</strong></p>
+                        </div>
+                        <div class='footer'>
+                            <p>This is an automated email. Please do not reply to this message.</p>
+                            <p>&copy; " . date('Y') . " ITSO. All rights reserved.</p>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            ";
+
+            $mail->AltBody = "Password Reset Request\n\n" .
+                            "Hello,\n\n" .
+                            "We received a request to reset your password.\n\n" .
+                            "Click this link to reset your password:\n" .
+                            "{$resetLink}\n\n" .
+                            "This link will expire in 1 hour.\n\n" .
+                            "If you didn't request this, please ignore this email.\n\n" .
+                            "Best regards,\nITSO Team";
+
+            $mail->send();
+            return true;
+            
+        } catch (\Exception $e) {
+            log_message('error', 'Email sending failed: ' . $mail->ErrorInfo);
+            return false;
+        }
+    }
+
+    // HELPER: Get dashboard by role
+    private function getDashboardByRole($role)
+    {
+        return match($role) {
+            'itso' => '/itso/dashboard',
+            'associate' => '/associate/dashboard',
+            'student' => '/student/dashboard',
+            default => '/student/dashboard'
+        };
+    }
+}
