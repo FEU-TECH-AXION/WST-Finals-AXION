@@ -101,7 +101,7 @@ class Auth extends BaseController
                     'email' => $this->request->getPost('email'),
                     'profile_photo' => $profilePhoto,
                     'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
-                    'role' => 'Student',
+                    'role' => 'student',
                     'status' => 'active',
                     'date_created' => date('Y-m-d H:i:s')
                 ];
@@ -210,9 +210,9 @@ class Auth extends BaseController
     private function getDashboardByRole($role)
     {
         return match($role) {
-            'ITSO' => '/admin/dashboard',
-            'Associate' => '/associate/dashboard',
-            'Student' => '/user/dashboard',
+            'itso' => '/admin/dashboard',
+            'associate' => '/associate/dashboard',
+            'student' => '/user/dashboard',
             default => '/login'
     };
     }
