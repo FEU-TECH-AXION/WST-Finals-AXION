@@ -131,15 +131,8 @@ class Equipments extends BaseController
             'status'         => $this->request->getPost('status'),
         ];
 
-        $rules = [
-            'item_name' => "required|min_length[2]|is_unique[inventory.item_name,item_id,{$id}]",
-            'quantity' => 'required|integer|greater_than_equal_to[0]',
-        ];
-
-        if (! $this->validate($rules)) {
-            return redirect()->back()
-                ->withInput()
-                ->with('validation', $this->validator);
+        if (!$this->validate('editInventory')) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
         $equipmentsModel->update($id, $data);

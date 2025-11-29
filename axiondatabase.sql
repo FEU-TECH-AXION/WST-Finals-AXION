@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2025 at 10:05 AM
+-- Generation Time: Nov 29, 2025 at 12:05 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -74,6 +74,27 @@ CREATE TABLE `inventory` (
   `date_created` datetime DEFAULT current_timestamp(),
   `date_updated` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `inventory`
+--
+
+INSERT INTO `inventory` (`item_id`, `item_name`, `item_type`, `parent_item_id`, `quantity`, `item_condition`, `location`, `status`, `date_created`, `date_updated`) VALUES
+('EQ-0001', 'Laptop', 'equipment', NULL, 10, 'good', 'IT Lab', 'active', '2025-11-29 19:02:15', '2025-11-29 19:02:15'),
+('EQ-0002', 'DLP Projector', 'equipment', NULL, 5, 'good', 'AV Room', 'active', '2025-11-29 19:02:15', '2025-11-29 19:02:15'),
+('EQ-0003', 'Keyboard & Mouse Set', 'equipment', NULL, 8, 'good', 'Mac Lab', 'active', '2025-11-29 19:02:15', '2025-11-29 19:02:15'),
+('EQ-0004', 'Wacom Drawing Tablet', 'equipment', NULL, 6, 'good', 'Design Lab', 'active', '2025-11-29 19:02:15', '2025-11-29 19:02:15'),
+('EQ-0005', 'Speaker Set', 'equipment', NULL, 4, 'good', 'Audio Lab', 'active', '2025-11-29 19:02:15', '2025-11-29 19:02:15'),
+('EQ-0006', 'Webcam', 'equipment', NULL, 10, 'good', 'IT Lab', 'active', '2025-11-29 19:02:15', '2025-11-29 19:02:15'),
+('EQ-0007', 'Lab Room Keys', 'equipment', NULL, 15, 'good', 'Admin Office', 'active', '2025-11-29 19:02:15', '2025-11-29 19:02:15'),
+('EQ-0008', 'Cable Crimping Tool', 'equipment', NULL, 5, 'good', 'Electronics Lab', 'active', '2025-11-29 19:02:15', '2025-11-29 19:02:15'),
+('EQ-0009', 'Cable Tester', 'equipment', NULL, 5, 'good', 'Electronics Lab', 'active', '2025-11-29 19:02:15', '2025-11-29 19:02:15'),
+('AC-0001', 'Laptop Charger', 'accessory', 'EQ-0001', 10, 'good', 'IT Lab', 'active', '2025-11-29 19:02:15', '2025-11-29 19:02:15'),
+('AC-0002', 'Extension Cord', 'accessory', 'EQ-0002', 5, 'good', 'AV Room', 'active', '2025-11-29 19:02:15', '2025-11-29 19:02:15'),
+('AC-0003', 'VGA/HDMI Cable', 'accessory', 'EQ-0002', 5, 'good', 'AV Room', 'active', '2025-11-29 19:02:15', '2025-11-29 19:02:15'),
+('AC-0004', 'Power Cable', 'accessory', 'EQ-0002', 5, 'good', 'AV Room', 'active', '2025-11-29 19:02:15', '2025-11-29 19:02:15'),
+('AC-0005', 'Lightning Cable', 'accessory', 'EQ-0003', 8, 'good', 'Mac Lab', 'active', '2025-11-29 19:02:15', '2025-11-29 19:02:15'),
+('AC-0006', 'Wacom Pen', 'accessory', 'EQ-0004', 6, 'good', 'Design Lab', 'active', '2025-11-29 19:02:15', '2025-11-29 19:02:15');
 
 --
 -- Triggers `inventory`
@@ -149,7 +170,7 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `profile_photo` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
-  `role` enum('itso','associate','student') NOT NULL,
+  `role` enum('ITSO','Associate','Student') NOT NULL,
   `status` enum('active','inactive') DEFAULT 'active',
   `date_created` datetime DEFAULT current_timestamp(),
   `date_updated` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -160,9 +181,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `name`, `email`, `profile_photo`, `password`, `role`, `status`, `date_created`, `date_updated`) VALUES
-('', 'Admin User', 'admin@example.com', 'default-avatar.png', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'itso', 'active', '2025-11-29 13:09:52', '2025-11-29 16:20:49'),
-('ASC001', 'Default Associate', 'associate@example.com', 'default-avatar.png', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'associate', 'active', '2025-11-29 16:58:53', '2025-11-29 16:59:18'),
-('STD001', 'Default Student', 'student@example.com', 'default-avatar.png', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'student', 'active', '2025-11-29 13:18:40', '2025-11-29 16:54:01');
+('', 'Admin User', 'admin@example.com', 'default.png', '$2y$10$VpYUJjt96OjRS0A5t7Kqku2kX8C2Tr32N5fWZT6iK3pmhr.bP.7Q2', '', 'active', '2025-11-29 13:09:52', '2025-11-29 13:09:52'),
+('STD001', 'Default Student', 'student@example.com', 'default.png', '$2y$10$VpYUJjt96OjRS0A5t7Kqku2kX8C2Tr32N5fWZT6iK3pmhr.bP.7Q2', 'Student', 'active', '2025-11-29 13:18:40', '2025-11-29 13:18:40');
 
 --
 -- Indexes for dumped tables
