@@ -69,7 +69,7 @@ class Borrow extends BaseController
     public function submit()
     {
         $equipmentsModel = new Model_Equipments();
-        $borrowLogModel = new Model_BorrowLog();
+        $borrowLogModel = new Model_Borrow_Log();
         $historyModel = new Model_History();
 
         $user_id = $this->session->get('user_id');
