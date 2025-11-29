@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
         <a class="navbar-brand" href="<?= base_url(); ?>">
-            <img src="<?= base_url('/public/assets/img/logoPlaceholder.png'); ?>" alt="AXION Logo" height="40" class="d-inline-block align-text-top">
+            <img src="<?= base_url('/public/assets/img/logoPurple.png'); ?>" alt="AXION Logo" height="40" class="d-inline-block align-text-top">
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"

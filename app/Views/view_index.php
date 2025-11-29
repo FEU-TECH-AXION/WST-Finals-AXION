@@ -1,7 +1,7 @@
 <main>
     <section class="hero-section">
     <div class="container d-flex align-items-start justify-content-center flex-column text-start text-white">
-        <img src="<?= base_url('/public/assets/img/logoPlaceholder.png') ?>" alt="Lola Nena’s Sisigan Logo" class="hero-logo">
+        <img src="<?= base_url('/public/assets/img/logoWhite.png') ?>" alt="Lola Nena’s Sisigan Logo" class="hero-logo">
         
         <h5>
             <p class="mt-3 fst-italic fs-5 text-warning">
