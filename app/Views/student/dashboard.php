@@ -35,7 +35,7 @@
             <ul class="nav flex-column">
                 <li class="nav-item mb-2"><a class="nav-link active" href="<?= base_url('student/dashboard#') ?>">Dashboard</a></li>
                 <li class="nav-item mb-2"><a class="nav-link" href="<?= base_url('borrow') ?>">Borrow</a></li>
-                <li class="nav-item mb-2"><a class="nav-link" href="<?= base_url('borrow') ?>">Return</a></li>
+                <li class="nav-item mb-2"><a class="nav-link" href="<?= base_url('return') ?>">Return</a></li>
                 <li class="nav-item mb-2"><a class="nav-link" href="<?= base_url('profile') ?>">Profile</a></li>
             </ul>
         </div>
