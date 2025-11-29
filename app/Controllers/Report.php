@@ -17,34 +17,33 @@ class Report extends BaseController
     public function index()
     {
         // Get filters from GET
-        $conditionFilter = $this->request->getGet('condition') ?? '';
-        $roleFilter = $this->request->getGet('role') ?? '';
+        $activeCondition   = $this->request->getGet('active_condition') ?? '';
+        $unusableCondition = $this->request->getGet('unusable_condition') ?? '';
+        $roleFilter        = $this->request->getGet('role') ?? '';
 
         $equipmentsModel = new Model_Equipments();
-        $historyModel = new Model_History();
+        $historyModel    = new Model_History();
 
-        // ACTIVE EQUIPMENT
+        // -------------------- ACTIVE EQUIPMENT --------------------
         $equipmentsActiveQuery = $equipmentsModel->where('status', 'active')
                                                  ->where('item_type', 'equipment');
-
-        if ($conditionFilter) {
-            $equipmentsActiveQuery->where('item_condition', $conditionFilter);
+        if ($activeCondition) {
+            $equipmentsActiveQuery->where('item_condition', $activeCondition);
         }
-
         $equipmentsActive = $equipmentsActiveQuery->orderBy('item_name', 'ASC')->findAll();
 
-        // UNUSABLE EQUIPMENT
+        // -------------------- UNUSABLE EQUIPMENT --------------------
         $equipmentsUnusableQuery = $equipmentsModel->whereIn('item_condition', ['broken', 'under repair']);
-
-        if ($conditionFilter) {
-            $equipmentsUnusableQuery->where('item_condition', $conditionFilter);
+        if ($unusableCondition) {
+            $equipmentsUnusableQuery->where('item_condition', $unusableCondition);
         }
-
         $equipmentsUnusable = $equipmentsUnusableQuery->orderBy('item_name', 'ASC')->findAll();
 
-        // USER BORROWING HISTORY
-        $historyQuery = $historyModel->join('users', 'history.user_id = users.user_id', 'left')
-                                     ->select('history.*, users.name, users.role');
+        // -------------------- USER BORROWING HISTORY --------------------
+        $historyQuery = $historyModel
+            ->join('users', 'history.user_id = users.user_id', 'left')
+            ->join('inventory', 'history.item_id = inventory.item_id', 'left')
+            ->select('history.*, users.name, users.role, inventory.item_name');
 
         if ($roleFilter) {
             $historyQuery->where('users.role', $roleFilter);
@@ -52,14 +51,15 @@ class Report extends BaseController
 
         $history = $historyQuery->orderBy('date_created', 'DESC')->findAll();
 
-        // Pass all data to the view
+        // -------------------- PASS DATA TO VIEW --------------------
         $data = [
-            'title' => "Axion - Reports",
-            'equipmentsActive'   => $equipmentsActive,
-            'equipmentsUnusable' => $equipmentsUnusable,
-            'history'            => $history,
-            'conditionFilter'    => $conditionFilter,
-            'roleFilter'         => $roleFilter
+            'title'               => "Axion - Reports",
+            'equipmentsActive'    => $equipmentsActive,
+            'equipmentsUnusable'  => $equipmentsUnusable,
+            'history'             => $history,
+            'activeCondition'     => $activeCondition,
+            'unusableCondition'   => $unusableCondition,
+            'roleFilter'          => $roleFilter
         ];
 
         return view('include/view_head', $data)
