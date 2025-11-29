@@ -1,40 +1,93 @@
 <main>
-   <section class="hero-bg py-5">
-      <div class="container">
-         <div class="row justify-content-center">
-            <div class="col-md-7">
-               <div class="card shadow p-4 border-0">
-                  <div class="col col-md-10 mx-auto">
-                     <h3 class="mb-3">Equipment Details</h3>
-                     <form action="" method="post">
-                        <div class="form-group mb-2">
-                           <label for="equipment_name" class="form-label">Equipment Name</label>
-                           <input type="text" name="equipment_name" id="equipment_name" class="form-control" readonly value="<?= esc($equipment['equipment_name']); ?>">
-                        </div>
+    <section class="hero-bg py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-7">
+                    <div class="card shadow p-4 border-0">
+                        <div class="col col-md-10 mx-auto">
 
-                        <div class="form-group mb-2">
-                           <label for="price" class="form-label">Price (₱)</label>
-                           <input type="text" name="price" id="price" class="form-control" readonly value="<?= esc($equipment['price']); ?>">
-                        </div>
+                            <h3 class="mb-3">Equipment Details</h3>
 
-                        <div class="form-group mb-2">
-                           <label for="stock" class="form-label">Stock</label>
-                           <input type="text" name="stock" id="stock" class="form-control" readonly value="<?= esc($equipment['stock']); ?>">
-                        </div>
+                            <!-- Item Name -->
+                            <div class="form-group mb-2">
+                                <label class="form-label">Item Name</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       readonly
+                                       value="<?= esc($equipment['item_name']); ?>">
+                            </div>
 
-                        <div class="form-group mb-2">
-                           <label for="datecreated" class="form-label">Date Created</label>
-                           <input type="text" name="datecreated" id="datecreated" class="form-control" readonly value="<?= esc($equipment['datecreated']); ?>">
-                        </div>
+                            <!-- Item Type -->
+                            <div class="form-group mb-2">
+                                <label class="form-label">Item Type</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       readonly
+                                       value="<?= esc($equipment['item_type']); ?>">
+                            </div>
 
-                        <div class="form-group">
-                           <a href="<?= base_url('equipments'); ?>" class="btn btn-warning">Back</a>
+                            <!-- Quantity -->
+                            <div class="form-group mb-2">
+                                <label class="form-label">Quantity</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       readonly
+                                       value="<?= esc($equipment['quantity']); ?>">
+                            </div>
+
+                            <!-- Item Condition -->
+                            <div class="form-group mb-2">
+                                <label class="form-label">Condition</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       readonly
+                                       value="<?= esc($equipment['item_condition']); ?>">
+                            </div>
+
+                            <!-- Location -->
+                            <div class="form-group mb-2">
+                                <label class="form-label">Location</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       readonly
+                                       value="<?= esc($equipment['location']); ?>">
+                            </div>
+
+                            <!-- Status -->
+                            <div class="form-group mb-2">
+                                <label class="form-label">Status</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       readonly
+                                       value="<?= esc($equipment['status']); ?>">
+                            </div>
+
+                            <!-- Date Created -->
+                            <div class="form-group mb-2">
+                                <label class="form-label">Date Created</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       readonly
+                                       value="<?= esc($equipment['date_created']); ?>">
+                            </div>
+
+                           <!-- Date Updated -->
+                            <div class="form-group mb-2">
+                                <label class="form-label">Date Updated</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       readonly
+                                       value="<?= esc($equipment['date_updated']); ?>">
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <a href="<?= base_url('equipments'); ?>" class="btn btn-warning px-4">Back</a>
+                            </div>
+
                         </div>
-                     </form>
-                  </div>
-               </div>
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-   </section>
+        </div>
+    </section>
 </main>
