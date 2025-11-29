@@ -3,7 +3,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\Model_Equipments;
-use App\Models\Model_BorrowLog;
+use App\Models\Model_Borrow_Log;
 use App\Models\Model_History;
 
 class ReturnController extends BaseController
@@ -19,7 +19,7 @@ class ReturnController extends BaseController
     // Show borrowed items for the logged-in user
     public function index()
     {
-        $borrowLogModel = new Model_BorrowLog();
+        $borrowLogModel = new Model_Borrow_Log();
         $equipmentsModel = new Model_Equipments();
 
         $user_id = $this->session->get('user_id');
@@ -51,7 +51,7 @@ class ReturnController extends BaseController
 
         return view('include/view_head', $data)
             . view('include/view_nav')
-            . view('return/list', $data)
+            . view('view_return', $data)
             . view('include/view_footer');
     }
 
