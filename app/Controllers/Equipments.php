@@ -64,7 +64,6 @@ class Equipments extends BaseController
             . view('include/view_footer');
     }
 
-
     public function insert()
     {
         $equipmentsModel = new Model_Equipments();
@@ -79,13 +78,8 @@ class Equipments extends BaseController
             'status'         => $this->request->getPost('status'),
         ];
 
-        $rules = [
-            'item_name' => 'required|min_length[2]',
-            'quantity' => 'required|integer|greater_than_equal_to[0]',
-        ];
-
-        if (! $this->validate($rules)) {
-            return redirect()->back()->withInput()->with('validation', $this->validator);
+        if (!$this->validate('addInventory')) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
         // Prevent duplicate item_name
