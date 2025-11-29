@@ -33,7 +33,8 @@
                             <!-- Expected Return -->
                             <div class="form-group mb-3">
                                 <label class="form-label">Expected Return Date</label>
-                                <input type="date" name="expected_return_date" class="form-control" required>
+                                <input type="date" name="expected_return_date" class="form-control" 
+                                    value="<?= isset($default_return_date) ? $default_return_date : ''; ?>" required>
                             </div>
 
                             <button type="submit" class="btn btn-primary px-4">Borrow Now</button>

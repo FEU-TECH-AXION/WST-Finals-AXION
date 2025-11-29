@@ -48,10 +48,14 @@ class Borrow extends BaseController
         // Get accessories
         $accessories = $equipmentsModel->where('parent_item_id', $id)->findAll();
 
+        // Calculate default expected return date (5 days from now)
+        $defaultReturnDate = date('Y-m-d', strtotime('+5 days'));
+
         $data = [
             'title' => "Axion - Borrow Equipment",
             'equipment' => $equipment,
-            'accessories' => $accessories
+            'accessories' => $accessories,
+            'default_return_date' => $defaultReturnDate
         ];
 
         return view('include/view_head', $data)
@@ -59,6 +63,7 @@ class Borrow extends BaseController
             . view('view_borrow_form', $data)
             . view('include/view_footer');
     }
+
 
      // Borrow submission
     public function submit()
