@@ -98,3 +98,10 @@ $routes->group('itso', ['filter' => 'auth'], function($routes) {
     // Settings
     $routes->get('settings', 'SettingsController::index');
 });
+
+
+// Forgot Password Routes
+$routes->get('forgot-password', 'Auth::forgotPassword');
+$routes->post('forgot-password', 'Auth::processForgotPassword');
+$routes->get('reset-password/(:any)', 'Auth::resetPassword/$1');
+$routes->post('reset-password/process', 'Auth::processResetPassword');

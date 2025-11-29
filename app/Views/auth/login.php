@@ -98,7 +98,7 @@
             </div>
 
             <div class="mb-3 text-end">
-                <a href="<?= base_url('forgot-password') ?>" class="text-decoration-none">
+                <a href="<?= base_url('forgot_password') ?>" class="text-decoration-none">
                     Forgot Password?
                 </a>
             </div>

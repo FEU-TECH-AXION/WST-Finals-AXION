@@ -118,86 +118,6 @@ class Auth extends BaseController
         return view('auth/signup', $data);
     }
 
-    // FORGOT PASSWORD
-    public function forgotPassword()
-    {
-        $data['title'] = 'Forgot Password - ITSO';
-
-        if ($this->request->is('post')) {
-            $rules = ['email' => 'required|valid_email'];
-
-            if (!$this->validate($rules)) {
-                $data['validation'] = $this->validator;
-            } else {
-                $email = $this->request->getPost('email');
-                $user = $this->userModel->where('email', $email)->first();
-
-                if ($user) {
-                    $token = bin2hex(random_bytes(32));
-                    $expiresAt = date('Y-m-d H:i:s', strtotime('+1 hour'));
-
-                    $this->passwordResetModel->insert([
-                        'email' => $email,
-                        'token' => $token,
-                        'expires_at' => $expiresAt
-                    ]);
-
-                    $this->sendPasswordResetEmail($email, $token);
-                    $data['success'] = 'Password reset link has been sent to your email.';
-                } else {
-                    $data['success'] = 'If that email exists, a password reset link has been sent.';
-                }
-            }
-        }
-
-        return view('auth/forgot_password', $data);
-    }
-
-    // RESET PASSWORD
-    public function resetPassword($token = null)
-    {
-        $data['title'] = 'Reset Password - ITSO';
-        $data['token'] = $token;
-
-        if (!$token) {
-            return redirect()->to('/forgot-password');
-        }
-
-        $resetToken = $this->passwordResetModel
-            ->where('token', $token)
-            ->where('used', 0)
-            ->where('expires_at >', date('Y-m-d H:i:s'))
-            ->first();
-
-        if (!$resetToken) {
-            $data['error'] = 'Invalid or expired reset token.';
-            return view('auth/reset_password', $data);
-        }
-
-        if ($this->request->is('post')) { 
-            $rules = [
-                'password' => 'required|min_length[6]',
-                'confirm_password' => 'required|matches[password]'
-            ];
-
-            if (!$this->validate($rules)) {
-                $data['validation'] = $this->validator;
-            } else {
-                $newPassword = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
-
-                $this->userModel->where('email', $resetToken['email'])
-                    ->set(['password' => $newPassword, 'date_updated' => date('Y-m-d H:i:s')])
-                    ->update();
-
-                $this->passwordResetModel->update($resetToken['id'], ['used' => 1]);
-
-                $this->session->setFlashdata('success', 'Password reset successful! Please login.');
-                return redirect()->to('/login');
-            }
-        }
-
-        return view('auth/reset_password', $data);
-    }
 
     // LOGOUT
     public function logout()
@@ -237,3 +157,4 @@ class Auth extends BaseController
     }
 
 }
+
