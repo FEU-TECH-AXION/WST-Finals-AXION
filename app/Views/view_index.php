@@ -1,7 +1,7 @@
 <main>
     <section class="hero-section">
     <div class="container d-flex align-items-start justify-content-center flex-column text-start text-white">
-        <img src="<?= base_url('/public/assets/img/logoPlaceholder.png') ?>" alt="Lola Nena’s Sisigan Logo" class="hero-logo">
+        <img src="<?= base_url('/public/assets/img/logoWhite.png') ?>" alt="Lola Nena’s Sisigan Logo" class="hero-logo">
         
         <h5>
             <p class="mt-3 fst-italic fs-5 text-warning">
@@ -24,7 +24,7 @@
         <div class="top-picks-container">
             <!-- Computing Resources -->
                 <div class="pick card shadow-sm p-3">
-                    <img src="<?= base_url('/public/assets/img/computer-resources.png') ?>" alt="Computing Resources" class="mb-2" style="max-height:120px;">
+                    <img src="<?= base_url('/public/assets/img/computer-resources.jpg') ?>" alt="Computing Resources" class="mb-2" style="max-height:120px;">
                     <h5>Computing Resources</h5>
                     <p>ITSO operates, maintains, and manages FEU TECH’s computer units, labs, peripherals, storage, and files.</p>
                 </div>
@@ -34,7 +34,6 @@
                     <img src="<?= base_url('/public/assets/img/software.png') ?>" alt="Educational Software" class="mb-2" style="max-height:120px;">
                     <h5>Educational Software & Technologies</h5>
                     <p>ITSO manages licenses and software for the academic community. Check your Canvas account for available tools.</p>
-                    <a href="https://feu.instructure.com/courses/48589/pages/educational-software-and-services-manual?module_item_id=1546863" target="_blank" class="btn btn-sm btn-primary mt-2">View Software List</a>
                 </div>
 
                 <!-- Technical Helpdesk -->
@@ -42,7 +41,6 @@
                     <img src="<?= base_url('/public/assets/img/helpdesk.png') ?>" alt="Technical Helpdesk" class="mb-2" style="max-height:120px;">
                     <h5>Technical Helpdesk</h5>
                     <p>Submit technical issues related to academic services. ITSO responds within 72 hours during operating hours.</p>
-                    <a href="http://bit.ly/ITSO_OnlineHelpDesk" target="_blank" class="btn btn-sm btn-primary mt-2">Submit Request</a>
                 </div>
 
                 <!-- Network and Security -->

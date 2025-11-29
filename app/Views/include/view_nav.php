@@ -1,3 +1,4 @@
+
 <?php
 // File: app/Views/templates/header.php
 ?>
@@ -57,5 +58,3 @@
                     <?php endif; ?>
                 </ul>
             </div>
-        </div>
-    </nav>

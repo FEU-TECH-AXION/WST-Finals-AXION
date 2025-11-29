@@ -68,7 +68,7 @@ class Users extends BaseController {
         $newFile = $file->getRandomName();
 
         // Set upload folders
-        $profile_images = FCPATH."public/profile_images/";
+        $profile_images = FCPATH."public/assets/img/profile_images/";
         $thumbs = $profile_images."/thumbs/";
 
         // Move the uploaded file from the tmp folder to the profile_images folder
