@@ -8,6 +8,16 @@
                         <form action="<?= base_url('equipments/insert') ?>" method="post">
                             <h4 class="mb-3 text-center">Add New Equipment</h4>
 
+                            <?php if (session()->has('errors')): ?>
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        <?php foreach (session('errors') as $error): ?>
+                                            <li><?= esc($error) ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                            <?php endif; ?>
+
                             <!-- Item Name -->
                             <div class="form-group mb-3">
                                 <label for="item_name" class="form-label">Item Name</label>
