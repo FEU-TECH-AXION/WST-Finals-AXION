@@ -65,8 +65,10 @@
                             <label>Filter by Condition:</label>
                             <select name="unusable_condition" class="form-select w-auto">
                                 <option value="">All</option>
+                                <option value="poor" <?= ($unusableCondition ?? '')=='poor' ? 'selected' : '' ?>>Poor</option>
                                 <option value="broken" <?= ($unusableCondition ?? '')=='broken' ? 'selected' : '' ?>>Broken</option>
                                 <option value="under repair" <?= ($unusableCondition ?? '')=='under repair' ? 'selected' : '' ?>>Under Repair</option>
+
                             </select>
                             <button type="submit" class="btn btn-secondary btn-sm">Filter</button>
                         </form>
