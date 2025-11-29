@@ -23,6 +23,7 @@ $routes->get('users/verify/(:any)', 'Users::verify/$1');
 $routes->get('equipments', 'Equipments::index');
 $routes->get('equipments/add', 'Equipments::add');
 $routes->post('equipments/insert', 'Equipments::insert');
+$routes->get('equipments/view/(:any)', 'Equipments::view/$1');
 $routes->get('equipments/equipment/(:any)', 'Equipments::view/$1');
 $routes->get('equipments/edit/(:any)', 'Equipments::edit/$1');
 $routes->post('equipments/update/(:any)', 'Equipments::update/$1');
