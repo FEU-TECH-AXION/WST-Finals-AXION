@@ -33,7 +33,7 @@
             <ul class="nav flex-column">
                 <li class="nav-item mb-2"><a class="nav-link active" href="#">Dashboard</a></li>
                 <li class="nav-item mb-2"><a class="nav-link" href="#">User Management</a></li>
-                <li class="nav-item mb-2"><a class="nav-link" href="#">Equipment Management</a></li>
+                <li class="nav-item mb-2"><a class="nav-link" href="<?= base_url('equipments') ?>">Equipment Management</a></li>
                 <li class="nav-item mb-2"><a class="nav-link" href="#">Reports</a></li>
                 <li class="nav-item mb-2"><a class="nav-link" href="<?= base_url('profile') ?>">Profile</a></li>
                 <li class="nav-item mb-2"><a class="nav-link" href="#">Settings</a></li>
