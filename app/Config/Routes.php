@@ -34,6 +34,15 @@ $routes->get('borrow', 'Borrow::index');
 $routes->get('borrow/form/(:segment)', 'Borrow::form/$1');
 $routes->post('borrow/submit/(:any)', 'Borrow::submit');
 
+// Routes for the Return controllers
+$routes->get('return', 'Return::index');
+$routes->get('return/form/(:segment)', 'Return::form/$1');
+$routes->post('return/submit', 'Return::submit');
+
+// Routes for the Reserve controllers
+
+// Routes for Record / History controllers
+
 // Authentication routes
 $routes->match(['get', 'post'], 'login', 'Auth::login');
 $routes->match(['get', 'post'], 'signup', 'Auth::signup');
