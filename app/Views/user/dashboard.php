@@ -3,7 +3,7 @@
 // File: app/Views/user/dashboard.php
 // ==============================================
 ?>
-<?= $this->include('templates/header') ?>
+<?= $this->include('include/header') ?>
 <style>
 .dashboard-container { min-height: 100vh; background: #f8f9fa; }
 .navbar-custom { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
@@ -49,4 +49,4 @@
         </div>
     </div>
 </div>
-<?= $this->include('templates/footer') ?>
+<?= $this->include('include/footer') ?>

@@ -1,7 +1,7 @@
 <?php
 // File: app/Views/auth/signup.php
 ?>
-<?= $this->include('templates/header') ?>
+<?= $this->include('include/header') ?>
 
 <style>
 .auth-container {
@@ -138,4 +138,4 @@ function previewPhoto(event) {
 }
 </script>
 
-<?= $this->include('templates/footer') ?>
+<?= $this->include('include/footer') ?>
