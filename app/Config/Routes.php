@@ -36,9 +36,9 @@ $routes->post('borrow/submit', 'Borrow::submit');
 
 
 // Routes for the Return controllers
-$routes->get('return', 'Return::index');
-$routes->get('return/form/(:segment)', 'Return::form/$1');
-$routes->post('return/submit', 'Return::submit');
+$routes->get('return', 'ReturnController::index');
+$routes->get('return/form/(:segment)', 'ReturnController::form/$1');
+$routes->post('return/submit', 'ReturnController::submit');
 
 // Routes for the Reserve controllers
 

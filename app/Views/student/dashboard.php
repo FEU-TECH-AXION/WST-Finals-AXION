@@ -3,13 +3,14 @@
 // File: app/Views/user/dashboard.php
 // ==============================================
 ?>
-<?= $this->include('include/view_nav') ?>
+<?= $this->include('include/view_nav_student') ?>
 <style>
 .dashboard-container { min-height: 100vh; background: #f8f9fa; }
-.navbar-custom { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
+.navbar-custom { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
 .sidebar { min-height: calc(100vh - 56px); background: white; border-right: 1px solid #dee2e6; padding: 20px; }
 .content-area { padding: 30px; }
-.service-card { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s; }
+.stat-card { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.stat-icon { font-size: 2rem; color: #667eea; }text-align: center; transition: transform 0.3s; }
 .service-card:hover { transform: translateY(-5px); }
 .service-icon { font-size: 3rem; margin-bottom: 15px; }
 </style>
