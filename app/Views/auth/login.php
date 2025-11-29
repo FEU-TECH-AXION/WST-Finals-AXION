@@ -1,7 +1,7 @@
 <?php
 // File: app/Views/auth/login.php
 ?>
-<?= $this->include('include/view_head') ?>
+<?= $this->include('include/view_nav') ?>
 
 <style>
 .auth-container {
@@ -124,4 +124,4 @@
     </div>
 </div>
 
-<?= $this->include('include/footer') ?>
+<?= $this->include('include/view_footer') ?>

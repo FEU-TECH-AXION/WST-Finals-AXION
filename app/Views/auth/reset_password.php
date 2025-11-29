@@ -1,7 +1,7 @@
 <?php
 // File: app/Views/auth/reset_password.php
 ?>
-<?= $this->include('include/view_head') ?>
+<?= $this->include('include/view_nav') ?>
 <style>
 .auth-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
 .auth-card { background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); padding: 40px; max-width: 450px; width: 100%; }
@@ -38,4 +38,4 @@
         <?php endif; ?>
     </div>
 </div>
-<?= $this->include('include/footer') ?>
+<?= $this->include('include/view_footer') ?>

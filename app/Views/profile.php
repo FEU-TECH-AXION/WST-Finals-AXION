@@ -1,7 +1,7 @@
 <?php
 // File: app/Views/profile.php
 ?>
-<?= $this->include('include/view_head') ?>
+<?= $this->include('include/view_nav') ?>
 
 <style>
 .profile-container { min-height: 100vh; background: #f8f9fa; padding: 30px 0; }
@@ -101,4 +101,4 @@ function previewNewPhoto(event) {
 }
 </script>
 
-<?= $this->include('include/footer') ?>
+<?= $this->include('include/view_footer') ?>
