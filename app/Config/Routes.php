@@ -42,16 +42,16 @@ $routes->get('profile', 'Profile::index', ['filter' => 'auth']);
 $routes->post('profile/update', 'Profile::update', ['filter' => 'auth']);
 
 // Admin routes (protected)
-$routes->group('admin', ['filter' => 'auth:ITSO'], function($routes) {
+$routes->group('admin', ['filter' => 'auth:itso'], function($routes) {
     $routes->get('dashboard', 'Admin\Dashboard::index');
 });
 
 // Associate routes (protected)
-$routes->group('associate', ['filter' => 'auth:Associate'], function($routes) {
+$routes->group('associate', ['filter' => 'auth:ssociate'], function($routes) {
     $routes->get('dashboard', 'Associate\Dashboard::index');
 });
 
 // User routes (protected)
-$routes->group('user', ['filter' => 'auth:Student'], function($routes) {
+$routes->group('user', ['filter' => 'auth:student'], function($routes) {
     $routes->get('dashboard', 'User\Dashboard::index');
 });
