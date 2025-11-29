@@ -58,7 +58,7 @@ class ReturnController extends BaseController
     // Return form for a specific borrowed item
     public function form($borrow_id)
     {
-        $borrowLogModel = new Model_BorrowLog();
+        $borrowLogModel = new Model_Borrow_Log();
         $equipmentsModel = new Model_Equipments();
 
         $borrow = $borrowLogModel->find($borrow_id);
@@ -93,7 +93,7 @@ class ReturnController extends BaseController
     // Submit return
     public function submit()
     {
-        $borrowLogModel = new Model_BorrowLog();
+        $borrowLogModel = new Model_Borrow_Log();
         $historyModel   = new Model_History();
         $equipmentsModel = new Model_Equipments();
 
