@@ -131,4 +131,3 @@
     </div>
 </div>
 
-<?= $this->include('include/view_footer') ?>
