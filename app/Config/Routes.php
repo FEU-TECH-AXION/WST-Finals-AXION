@@ -43,6 +43,7 @@ $routes->post('return/submit', 'ReturnController::submit');
 // Routes for the Reserve controllers
 
 // Routes for Record / History controllers
+$routes->get('reports', 'Report::index');
 
 // Authentication routes
 $routes->match(['get', 'post'], 'login', 'Auth::login');

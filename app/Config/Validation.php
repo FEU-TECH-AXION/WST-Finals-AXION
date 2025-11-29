@@ -167,13 +167,6 @@ class Validation extends BaseConfig
                 'required' => 'Item type is required.',
             ],
         ],
-        'condition' => [
-            'label'  => 'Condition',
-            'rules'  => 'required',
-            'errors' => [
-                'required' => 'Condition is required.',
-            ],
-        ],
         'quantity' => [
             'label'  => 'Quantity',
             'rules'  => 'required|integer|greater_than[0]',
