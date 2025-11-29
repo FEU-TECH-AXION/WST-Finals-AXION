@@ -235,4 +235,5 @@ class Auth extends BaseController
         $emailService->setMessage($message);
         $emailService->send();
     }
+
 }
