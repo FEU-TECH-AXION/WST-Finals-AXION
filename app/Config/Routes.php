@@ -41,6 +41,9 @@ $routes->get('return/form/(:segment)', 'ReturnController::form/$1');
 $routes->post('return/submit', 'ReturnController::submit');
 
 // Routes for the Reserve controllers
+$routes->get('reserve', 'Reserve::index');
+$routes->get('reserve/form/(:segment)', 'Reserve::form/$1');
+$routes->post('reserve/submit', 'Reserve::submit');
 
 // Routes for Record / History controllers
 $routes->get('reports', 'Report::index');
@@ -99,3 +102,10 @@ $routes->group('itso', ['filter' => 'auth'], function($routes) {
     // Settings
     $routes->get('settings', 'SettingsController::index');
 });
+
+
+// Forgot Password Routes
+$routes->get('forgot-password', 'Auth::forgotPassword');
+$routes->post('forgot-password', 'Auth::processForgotPassword');
+$routes->get('reset-password/(:any)', 'Auth::resetPassword/$1');
+$routes->post('reset-password/process', 'Auth::processResetPassword');
