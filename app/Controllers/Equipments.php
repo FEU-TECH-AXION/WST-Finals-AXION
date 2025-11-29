@@ -13,7 +13,7 @@ class Equipments extends BaseController
         $this->session = session();
     }
 
-    public function index($perpage = 10)
+    public function index($perpage = 5)
     {
         $equipmentsModel = new Model_Equipments();
         $equipmentsModel->orderBy("item_name", "ASC");
