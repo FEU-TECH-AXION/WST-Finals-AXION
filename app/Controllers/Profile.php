@@ -28,9 +28,9 @@ class Profile extends BaseController
         // Set back link based on role
         $role = $this->session->get('role');
         $data['backLink'] = match($role) {
-            'ITSO' => '/admin/dashboard',
-            'Associate' => '/associate/dashboard',
-            'Student' => '/user/dashboard',
+            'itso' => '/admin/dashboard',
+            'associate' => '/associate/dashboard',
+            'student' => '/user/dashboard',
             default => '/login'
         };
 
