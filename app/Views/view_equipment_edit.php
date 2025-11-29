@@ -4,7 +4,7 @@
             <div class="col-md-5">
                 <div class="card shadow p-4 border-0">
                     <div class="col col-md-10 mx-auto">
-                        <form action="<?= base_url('equipments/equipmentsupdate/' . $equipment['id']) ?>" method="post">
+                        <form action="<?= base_url('equipments/equipment_update/' . $equipment['id']) ?>" method="post">
                             <h3 class="mb-3">Modify Equipment Details</h3>
 
                             <!-- Equipment Name -->
