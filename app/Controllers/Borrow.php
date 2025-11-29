@@ -15,7 +15,7 @@ class Borrow extends BaseController
         $this->session = session();
     }
 
-    public function index($perpage = 10)
+    public function index($perpage = 5)
     {
         $equipmentsModel = new Model_Equipments();
 
@@ -111,6 +111,29 @@ class Borrow extends BaseController
                 'borrowed_date' => date('Y-m-d H:i:s')
             ]);
         }
+
+        // ----------------- SEND EMAIL -----------------
+        $userModel = new \App\Models\Model_Users();
+        $user = $userModel->find($user_id);
+
+        $email = service('email');
+
+        $message = "
+        Hello, {$user['fullname']}!<br><br>
+        You have successfully borrowed: <b>{$equipment['item_name']}</b>.<br>
+        Included accessories: <b>" . 
+            (empty($accessories) ? 'None' : implode(', ', array_column($accessories, 'item_name'))) 
+        . "</b><br><br>
+        Borrowed Date: <b>" . date('Y-m-d H:i:s') . "</b><br>
+        Expected Return: <b>{$expected_return}</b><br><br>
+        Please ensure the item is returned on time.
+        ";
+
+        $email->setTo($user['email']);
+        $email->setSubject('Equipment Borrowed Confirmation');
+        $email->setMessage($message);
+        $email->send();
+        // ----------------------------------------------
 
         $this->session->setFlashdata('success', 'Equipment borrowed successfully.');
         return redirect()->to('/borrow');

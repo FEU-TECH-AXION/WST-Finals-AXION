@@ -32,7 +32,8 @@ $routes->get('equipments/delete/(:any)', 'Equipments::delete/$1');
 // Routes for the Borrow controllers
 $routes->get('borrow', 'Borrow::index');
 $routes->get('borrow/form/(:segment)', 'Borrow::form/$1');
-$routes->post('borrow/submit/(:any)', 'Borrow::submit');
+$routes->post('borrow/submit', 'Borrow::submit');
+
 
 // Routes for the Return controllers
 $routes->get('return', 'Return::index');
