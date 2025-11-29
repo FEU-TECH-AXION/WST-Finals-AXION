@@ -173,13 +173,13 @@
                 <h5 class="modal-title">Add New User</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="<?= base_url('admin/users/create') ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?= base_url('itso/users/create') ?>" method="POST" enctype="multipart/form-data">
                 <?= csrf_field() ?>
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">User ID</label>
                         <input type="text" name="user_id" class="form-control" required>
-                        <small class="text-muted">Format: STD001, ASC001, etc.</small>
+                        <small class="text-muted">Format: STD001, ASC001, ITSO001, etc.</small>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Full Name</label>
@@ -224,7 +224,7 @@
                 <h5 class="modal-title">Edit User</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="<?= base_url('admin/users/update') ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?= base_url('itso/users/update') ?>" method="POST" enctype="multipart/form-data">
                 <?= csrf_field() ?>
                 <input type="hidden" name="user_id" id="edit_user_id">
                 <div class="modal-body">
@@ -329,13 +329,13 @@ function editUser(userId) {
 
 function deactivateUser(userId) {
     if (confirm('Are you sure you want to deactivate this user?')) {
-        window.location.href = `<?= base_url('admin/users/deactivate/') ?>${userId}`;
+        window.location.href = '<?= base_url("itso/users/deactivate/") ?>' + userId;
     }
 }
 
 function activateUser(userId) {
     if (confirm('Are you sure you want to activate this user?')) {
-        window.location.href = `<?= base_url('admin/users/activate/') ?>${userId}`;
+        window.location.href = '<?= base_url("itso/users/activate/") ?>' + userId;
     }
 }
 
