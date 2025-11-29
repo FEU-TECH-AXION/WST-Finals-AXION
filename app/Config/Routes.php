@@ -23,10 +23,10 @@ $routes->get('users/verify/(:any)', 'Users::verify/$1');
 $routes->get('equipments', 'Equipments::index');
 $routes->get('equipments/equipment_add', 'Equipments::add');
 $routes->post('equipments/equipment_insert', 'Equipments::insert');
-$routes->get('equipments/equipment/(:num)', 'Equipments::view/$1');
-$routes->get('equipments/equipment_edit/(:num)', 'Equipments::edit/$1');
-$routes->post('equipments/equipment_update/(:num)', 'Equipments::update/$1');
-$routes->get('equipments/equipment_delete/(:num)', 'Equipments::delete/$1');
+$routes->get('equipments/equipment/(:any)', 'Equipments::view/$1');
+$routes->get('equipments/equipment_edit/(:any)', 'Equipments::edit/$1');
+$routes->post('equipments/equipment_update/(:any)', 'Equipments::update/$1');
+$routes->get('equipments/equipment_delete/(:any)', 'Equipments::delete/$1');
 
 // Routes for the ____ controllers
 
